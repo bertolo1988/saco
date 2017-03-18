@@ -1,0 +1,45 @@
+{
+    "name": "saco",
+    "version": "0.0.1",
+    "description": "A NodeJS production server for single page web apps",
+    "main": "dist/Saco.js",
+    "engines": {
+        "node": ">= 7.0.0"
+    },
+    "scripts": {
+        "lint": "tslint --fix --project .",
+        "build": "tsc -p .",
+        "watch": "tsc -w",
+        "inspect": "node --inspect dist/src/Run.js",
+        "start": "node dist/Run.js",
+        "prepublish": "npm run lint && npm run build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/bertolo1988/saco.git"
+    },
+    "keywords": [
+        "server",
+        "production"
+    ],
+    "author": "bertolo1988 <tiagobertolo@gmail.com> (https://github.com/bertolo1988)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/bertolo1988/saco/issues"
+    },
+    "homepage": "https://github.com/bertolo1988/saco#readme",
+    "devDependencies": {
+        "@types/compression": "0.0.33",
+        "@types/debug": "0.0.29",
+        "@types/node": "^7.0.8",
+        "tslint": "^4.5.1",
+        "typescript": "^2.2.1"
+    },
+    "dependencies": {
+        "compression": "^1.6.2",
+        "dateformat": "^2.0.0",
+        "debug": "^2.6.3",
+        "express": "^4.15.2",
+        "serve-favicon": "^2.4.1"
+    }
+}
