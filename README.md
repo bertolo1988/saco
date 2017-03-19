@@ -61,8 +61,8 @@ Use `DEBUG=saco:* npm run your-launcher.js` to have the logs printed on your con
 
 ## Testing
 
-// todo
-// suggestions needed
+// todo, suggestions needed
+
 
 ## Issues and suggestions
 
