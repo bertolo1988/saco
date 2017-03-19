@@ -15,6 +15,8 @@ export interface SacoServerOptions {
     file: string;
     favicon: string;
     port: number;
+    dateformat: string;
+    verbose: boolean;
 }
 
 export class Server {
@@ -23,7 +25,9 @@ export class Server {
         folder: path.join(__dirname, 'dist'),
         file: 'index.html',
         favicon: 'favicon.ico',
-        port: 4200
+        port: 4200,
+        dateformat: 'GMT:HH:MM:ss dd-mmm-yy Z',
+        verbose: false
     };
     app: Application = express();
     server: Http.Server;
@@ -31,17 +35,24 @@ export class Server {
 
     constructor(options: SacoServerOptions) {
         this.options = Object.assign({}, this.DEFAULT_OPTIONS, options);
+        logInfo('Options: %O', this.options);
         this.configure();
     }
 
     configure() {
         this.app.use(compression());
+        if (this.options.verbose) {
+            this.app.use((req: Request, res: Response, next: Function) => {
+                logInfo(datefmt(new Date(), this.options.dateformat), '\t:', req.method, req.url);
+                next();
+            });
+        }
         this.app.use(express.static(this.options.folder));
         this.app.get('/*', function (req, res) {
             res.sendFile(path.join(this.folder, this.file));
         });
         this.app.use((err: Error, req: Request, res: Response, next: Function) => {
-            logError(datefmt(new Date(), 'GMT: HH:MM:ss dd-mmm-yy Z'), ':', req.url);
+            logError(datefmt(new Date(), this.options.dateformat), '\t:', req.method, req.url);
             logError(err.stack);
             res.status(500).send('Something broke!');
         });
