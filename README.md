@@ -22,6 +22,10 @@ server.start();
 5. Run it as: `DEBUG:saco:* node my-script.js`.
 
 
+## Demo
+
+`npm run start` and it will host a sample angular 2 single page web app built with [angular-cli](https://github.com/angular/angular-cli).
+
 ## Main features
 
 * http static folder host

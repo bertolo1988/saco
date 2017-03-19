@@ -1,6 +1,6 @@
 {
     "name": "saco",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "A NodeJS production server for single page web apps",
     "main": "dist/Server.js",
     "engines": {
@@ -10,6 +10,7 @@
         "lint": "tslint --fix --project .",
         "build": "tsc -p .",
         "watch": "tsc -w",
+        "start": "cross-env DEBUG=saco:* node demo.js",
         "prepublish": "npm run lint && npm run build"
     },
     "repository": {
@@ -31,7 +32,8 @@
         "@types/debug": "0.0.29",
         "@types/node": "^7.0.8",
         "tslint": "^4.5.1",
-        "typescript": "^2.2.1"
+        "typescript": "^2.2.1",
+        "cross-env": "^3.2.4"
     },
     "dependencies": {
         "compression": "^1.6.2",

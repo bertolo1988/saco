@@ -9,20 +9,34 @@ import * as favicon from 'serve-favicon';
 
 let logError: debug.IDebugger = debug('saco:error');
 let logInfo: debug.IDebugger = debug('saco:info');
-let server;
+
+export interface SacoServerOptions {
+    folder: string;
+    file: string;
+    favicon: string;
+    port: number;
+}
 
 export class Server {
 
+    readonly DEFAULT_OPTIONS = {
+        folder: path.join(__dirname, 'dist'),
+        file: 'index.html',
+        favicon: 'favicon.ico',
+        port: 4200
+    };
     app: Application = express();
     server: Http.Server;
+    options: SacoServerOptions;
 
-    constructor(private folder: string = path.join(__dirname, 'dist'), private file: string = 'index.html', private favicon: string = 'favicon.ico', private port: number = 4200) {
+    constructor(options: SacoServerOptions) {
+        this.options = Object.assign({}, this.DEFAULT_OPTIONS, options);
         this.configure();
     }
 
     configure() {
         this.app.use(compression());
-        this.app.use(express.static(this.folder));
+        this.app.use(express.static(this.options.folder));
         this.app.get('/*', function (req, res) {
             res.sendFile(path.join(this.folder, this.file));
         });
@@ -31,13 +45,13 @@ export class Server {
             logError(err.stack);
             res.status(500).send('Something broke!');
         });
-        this.app.use(favicon(path.join(this.folder, this.favicon)));
+        this.app.use(favicon(path.join(this.options.folder, this.options.favicon)));
     }
 
     start() {
         this.configure();
-        server = this.app.listen(this.port, () => {
-            logInfo('Listening on port %O', this.port);
+        this.server = this.app.listen(this.options.port, () => {
+            logInfo('Listening on port %O', this.options.port);
         });
     }
 

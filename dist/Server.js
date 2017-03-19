@@ -8,19 +8,21 @@ const datefmt = require("dateformat");
 const favicon = require("serve-favicon");
 let logError = debug('saco:error');
 let logInfo = debug('saco:info');
-let server;
 class Server {
-    constructor(folder = path.join(__dirname, 'dist'), file = 'index.html', favicon = 'favicon.ico', port = 4200) {
-        this.folder = folder;
-        this.file = file;
-        this.favicon = favicon;
-        this.port = port;
+    constructor(options) {
+        this.DEFAULT_OPTIONS = {
+            folder: path.join(__dirname, 'dist'),
+            file: 'index.html',
+            favicon: 'favicon.ico',
+            port: 4200
+        };
         this.app = express();
+        this.options = Object.assign({}, this.DEFAULT_OPTIONS, options);
         this.configure();
     }
     configure() {
         this.app.use(compression());
-        this.app.use(express.static(this.folder));
+        this.app.use(express.static(this.options.folder));
         this.app.get('/*', function (req, res) {
             res.sendFile(path.join(this.folder, this.file));
         });
@@ -29,12 +31,12 @@ class Server {
             logError(err.stack);
             res.status(500).send('Something broke!');
         });
-        this.app.use(favicon(path.join(this.folder, this.favicon)));
+        this.app.use(favicon(path.join(this.options.folder, this.options.favicon)));
     }
     start() {
         this.configure();
-        server = this.app.listen(this.port, () => {
-            logInfo('Listening on port %O', this.port);
+        this.server = this.app.listen(this.options.port, () => {
+            logInfo('Listening on port %O', this.options.port);
         });
     }
     stop() {
