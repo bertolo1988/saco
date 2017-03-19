@@ -1,8 +1,8 @@
 {
     "name": "saco",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "A NodeJS production server for single page web apps",
-    "main": "dist/SacoServer.js",
+    "main": "dist/Server.js",
     "engines": {
         "node": ">= 7.0.0"
     },
@@ -10,8 +10,6 @@
         "lint": "tslint --fix --project .",
         "build": "tsc -p .",
         "watch": "tsc -w",
-        "inspect": "node --inspect dist/src/Run.js",
-        "start": "node dist/Run.js",
         "prepublish": "npm run lint && npm run build"
     },
     "repository": {
