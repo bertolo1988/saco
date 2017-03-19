@@ -34,8 +34,8 @@ class Server {
             });
         }
         this.app.use(express.static(this.options.folder));
-        this.app.get('/*', function (req, res) {
-            res.sendFile(path.join(this.folder, this.file));
+        this.app.get('/*', (req, res) => {
+            res.sendFile(path.join(this.options.folder, this.options.file));
         });
         this.app.use((err, req, res, next) => {
             logError(datefmt(new Date(), this.options.dateformat), '\t:', req.method, req.url);

@@ -2,6 +2,9 @@
 
 A pre customized, express server for single page web apps that aims to be production ready.
 
+[![dependencies Status](https://david-dm.org/bertolo1988/saco/status.svg)](https://david-dm.org/bertolo1988/saco)
+[![npm version](https://badge.fury.io/js/saco.svg)](https://badge.fury.io/js/saco)
+
 ## How to use
 
 1. Create a folder `mkdir my-saco-launcher` and `cd` into it.
@@ -34,11 +37,6 @@ new Saco.Server( { "folder" : path.join(__dirname, '/dist' )} ).start();
 * customizable logging with [debug](https://github.com/visionmedia/debug)
 * [customizable format timestamps](https://github.com/felixge/node-dateformat) 
 
-## Coming soon
-
-* minification
-* cluster
-
 ## Options
 
 Saco server supports the following options:
@@ -59,21 +57,18 @@ In order to have an https server `key` and `cert` paths must be defined.
 
 Use `DEBUG=saco:* npm run your-launcher.js` to have the logs printed on your console.
 
-## Testing
-
-// todo, suggestions needed
-
-
-## Issues and suggestions
-
-Feel free to open any issues on any matter.
-
 ## Contributing
 
-Do not forget to respect the linting rules. 
+Contributions will be highly appreciated.
 
-Feel free to send pull requests.
+Feel free to open any issues on any related matter.
+
+Suggestions are specially needed on the following topics:
+
+* testing
+* minification
+* clusterization
 
 ## LICENSE
 
-MIT
+Code released under the [MIT license](./LICENSE).
