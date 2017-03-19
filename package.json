@@ -20,7 +20,10 @@
     },
     "keywords": [
         "server",
-        "production"
+        "production",
+        "nodejs",
+        "express",
+        "gzip"
     ],
     "author": "bertolo1988 <tiagobertolo@gmail.com> (https://github.com/bertolo1988)",
     "license": "MIT",
