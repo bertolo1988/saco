@@ -7,6 +7,7 @@ const compression = require("compression");
 const path = require("path");
 const datefmt = require("dateformat");
 const favicon = require("serve-favicon");
+const fs = require("fs");
 let logError = debug('saco:error');
 let logInfo = debug('saco:info');
 class Server {
@@ -51,7 +52,11 @@ class Server {
     }
     startHttpsServer() {
         logInfo('Starting https server...');
-        this.httpsServer = Https.createServer({ key: this.options.key, cert: this.options.cert }, this.app);
+        let httpsOptions = {
+            key: fs.readFileSync(this.options.key),
+            cert: fs.readFileSync(this.options.cert)
+        };
+        this.httpsServer = Https.createServer(httpsOptions, this.app);
         this.httpsServer.listen(this.options.port, () => {
             logInfo('Listening on port %O', this.options.port);
         });

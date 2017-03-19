@@ -10,7 +10,8 @@
         "lint": "tslint --fix --project .",
         "build": "tsc -p .",
         "watch": "tsc -w",
-        "start": "cross-env DEBUG=saco:* node demo.js",
+        "http-demo": "cross-env DEBUG=saco:* node http-demo.js",
+        "https-demo": "cross-env DEBUG=saco:* node https-demo.js",
         "prepublish": "npm run lint && npm run build"
     },
     "repository": {

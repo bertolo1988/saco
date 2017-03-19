@@ -22,7 +22,7 @@ new Saco.Server( { "folder" : path.join(__dirname, '/dist' )} ).start();
 
 ## Demo
 
-`npm run start` and it will host a sample angular 2 single page web app built with [angular-cli](https://github.com/angular/angular-cli).
+`npm run http-demo` or `npm run https-demo` and it will host a sample angular 2 single page web app built with [angular-cli](https://github.com/angular/angular-cli).
 
 ## Main features
 
@@ -51,6 +51,8 @@ readonly DEFAULT_OPTIONS = {
     verbose: false
 };
 ```
+
+In order to have an https server `key` and `cert` paths must be defined.
 
 ## Logging
 

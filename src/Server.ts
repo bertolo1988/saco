@@ -73,7 +73,11 @@ export class Server {
 
     startHttpsServer() {
         logInfo('Starting https server...');
-        this.httpsServer = Https.createServer({ key: this.options.key, cert: this.options.cert }, this.app);
+        let httpsOptions = {
+            key: fs.readFileSync(this.options.key),
+            cert: fs.readFileSync(this.options.cert)
+        };
+        this.httpsServer = Https.createServer(httpsOptions, this.app);
         this.httpsServer.listen(this.options.port, () => {
             logInfo('Listening on port %O', this.options.port);
         });
