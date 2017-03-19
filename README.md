@@ -1,6 +1,6 @@
 # saco
 
-A pre customized, production ready, express server for single page web apps.
+A pre customized, express server for single page web apps that aims to be production ready.
 
 ## How to use
 
@@ -37,6 +37,7 @@ new Saco.Server( { "folder" : path.join(__dirname, '/dist' )} ).start();
 ## Coming soon
 
 * minification
+* cluster
 
 ## Options
 
@@ -61,6 +62,7 @@ Use `DEBUG=saco:* npm run your-launcher.js` to have the logs printed on your con
 ## Testing
 
 // todo
+// suggestions needed
 
 ## Issues and suggestions
 
