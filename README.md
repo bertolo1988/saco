@@ -26,16 +26,16 @@ new Saco.Server( { "folder" : path.join(__dirname, '/dist' )} ).start();
 
 ## Main features
 
-* http static folder host
-* error logging with timestamps
+* http && https static folder hosting
+* default redirection to an entry point
 * start & stop methods
 * favicon hosted with [serve-favicon](https://github.com/expressjs/serve-favicon)
 * gzip with [compression](https://github.com/expressjs/compression)
-* format customizable timestamps
+* customizable logging with [debug](https://github.com/visionmedia/debug)
+* [customizable format timestamps](https://github.com/felixge/node-dateformat) 
 
 ## Coming soon
 
-* https
 * minification
 
 ## Options

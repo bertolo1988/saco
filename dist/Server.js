@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const Https = require("https");
 const express = require("express");
 const debug = require("debug");
 const compression = require("compression");
@@ -42,14 +43,37 @@ class Server {
         });
         this.app.use(favicon(path.join(this.options.folder, this.options.favicon)));
     }
-    start() {
-        this.configure();
-        this.server = this.app.listen(this.options.port, () => {
+    startHttpServer() {
+        logInfo('Starting http server...');
+        this.httpServer = this.app.listen(this.options.port, () => {
             logInfo('Listening on port %O', this.options.port);
         });
     }
+    startHttpsServer() {
+        logInfo('Starting https server...');
+        this.httpsServer = Https.createServer({ key: this.options.key, cert: this.options.cert }, this.app);
+        this.httpsServer.listen(this.options.port, () => {
+            logInfo('Listening on port %O', this.options.port);
+        });
+    }
+    isHttps() {
+        return this.options.key != null && this.options.cert != null;
+    }
+    start() {
+        if (this.isHttps()) {
+            this.startHttpsServer();
+        }
+        else {
+            this.startHttpServer();
+        }
+    }
     stop() {
-        this.server.close();
+        if (this.isHttps()) {
+            this.httpsServer.close();
+        }
+        else {
+            this.httpServer.close();
+        }
     }
 }
 exports.Server = Server;
