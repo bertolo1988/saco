@@ -10,7 +10,7 @@ let logError = debug('saco:error');
 let logInfo = debug('saco:info');
 let server;
 class SacoServer {
-    constructor(folder = 'dist', file = 'index.html', favicon = 'favicon.ico', port = 4200) {
+    constructor(folder = path.join(__dirname, 'dist'), file = 'index.html', favicon = 'favicon.ico', port = 4200) {
         this.folder = folder;
         this.file = file;
         this.favicon = favicon;
@@ -20,16 +20,16 @@ class SacoServer {
     }
     configure() {
         this.app.use(compression());
-        this.app.use(express.static(path.join(__dirname, this.folder)));
+        this.app.use(express.static(this.folder));
         this.app.get('/*', function (req, res) {
-            res.sendFile(path.join(__dirname, this.folder, this.file));
+            res.sendFile(path.join(this.folder, this.file));
         });
         this.app.use((err, req, res, next) => {
             logError(datefmt(new Date(), 'GMT: HH:MM:ss dd-mmm-yy Z'), ':', req.url);
             logError(err.stack);
             res.status(500).send('Something broke!');
         });
-        this.app.use(favicon(path.join(__dirname, this.folder, this.favicon)));
+        this.app.use(favicon(path.join(this.folder, this.favicon)));
     }
     start() {
         this.configure();

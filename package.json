@@ -2,7 +2,7 @@
     "name": "saco",
     "version": "0.0.1",
     "description": "A NodeJS production server for single page web apps",
-    "main": "dist/Saco.js",
+    "main": "dist/SacoServer.js",
     "engines": {
         "node": ">= 7.0.0"
     },

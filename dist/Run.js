@@ -1,5 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Saco_1 = require("./Saco");
-new Saco_1.Saco().start();
+const SacoServer_1 = require("./SacoServer");
+new SacoServer_1.SacoServer().start();
 //# sourceMappingURL=Run.js.map
