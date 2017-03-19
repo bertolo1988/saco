@@ -11,7 +11,7 @@ let logError: debug.IDebugger = debug('saco:error');
 let logInfo: debug.IDebugger = debug('saco:info');
 let server;
 
-export class SacoServer {
+export class Server {
 
     app: Application = express();
     server: Http.Server;

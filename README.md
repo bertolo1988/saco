@@ -14,8 +14,8 @@ A pre customized, production ready, express server for single page web apps.
 
 ```javascript
 const path = require('path');
-var Saco = require('saco');
-var server = new Saco.SacoServer(path.join(__dirname, '/dist'), 'index.html', 'favicon.ico', 4200);
+const Saco = require('saco');
+var server = new Saco.Server(path.join(__dirname, '/dist'), 'index.html', 'favicon.ico', 4200);
 server.start();
 ```
 
@@ -33,7 +33,7 @@ server.start();
 ## Coming soon
 
 * https
-* morgan
+* [morgan](https://www.npmjs.com/package/morgan)
 * customizable timestamps
 * minification
 
@@ -44,15 +44,6 @@ Saco server supports the following options:
 * file - the main file of your web app
 * favicon - the path from folder to the favicon
 * port - the port to listen to
-
-## Running
-
-```javascript
-const path = require('path');
-var Saco = require('saco');
-var server = new Saco.SacoServer(path.join(__dirname, '/dist'), 'index.html', 'favicon.ico', 4200);
-server.start();
-```
 
 ## Logging
 

@@ -9,7 +9,7 @@ const favicon = require("serve-favicon");
 let logError = debug('saco:error');
 let logInfo = debug('saco:info');
 let server;
-class SacoServer {
+class Server {
     constructor(folder = path.join(__dirname, 'dist'), file = 'index.html', favicon = 'favicon.ico', port = 4200) {
         this.folder = folder;
         this.file = file;
@@ -41,6 +41,6 @@ class SacoServer {
         this.server.close();
     }
 }
-exports.SacoServer = SacoServer;
+exports.Server = Server;
 ;
-//# sourceMappingURL=SacoServer.js.map
+//# sourceMappingURL=Server.js.map
