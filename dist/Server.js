@@ -15,7 +15,6 @@ class Server {
         this.DEFAULT_OPTIONS = {
             folder: path.join(__dirname, 'dist'),
             file: 'index.html',
-            favicon: 'favicon.ico',
             port: 4200,
             dateformat: 'GMT:HH:MM:ss dd-mmm-yy Z',
             verbose: false
@@ -42,7 +41,9 @@ class Server {
             logError(err.stack);
             res.status(500).send('Something broke!');
         });
-        this.app.use(favicon(path.join(this.options.folder, this.options.favicon)));
+        if (this.options.favicon != null) {
+            this.app.use(favicon(path.join(this.options.folder, this.options.favicon)));
+        }
     }
     startHttpServer() {
         logInfo('Starting http server...');
