@@ -13,7 +13,6 @@ let logInfo = debug('saco:info');
 class Server {
     constructor(options) {
         this.DEFAULT_OPTIONS = {
-            folder: path.join(__dirname, 'dist'),
             file: 'index.html',
             port: 4200,
             dateformat: 'GMT:HH:MM:ss dd-mmm-yy Z',
@@ -46,39 +45,55 @@ class Server {
         }
     }
     startHttpServer() {
-        logInfo('Starting http server...');
-        this.httpServer = this.app.listen(this.options.port, () => {
-            logInfo('Listening on port %O', this.options.port);
-        });
-    }
-    startHttpsServer() {
-        logInfo('Starting https server...');
-        let httpsOptions = {
-            key: fs.readFileSync(this.options.key),
-            cert: fs.readFileSync(this.options.cert)
-        };
-        this.httpsServer = Https.createServer(httpsOptions, this.app);
-        this.httpsServer.listen(this.options.port, () => {
-            logInfo('Listening on port %O', this.options.port);
+        let self = this;
+        return new Promise(function (resolve, reject) {
+            logInfo('Starting http server...');
+            self.httpServer = self.app.listen(self.options.port, () => {
+                logInfo('Listening on port %O', self.options.port);
+                resolve();
+            }).on('error', () => {
+                logError('Failed to start the server on port %O', self.options.port);
+                reject();
+            });
         });
     }
     isHttps() {
         return this.options.key != null && this.options.cert != null;
     }
+    startHttpsServer() {
+        let self = this;
+        return new Promise(function (resolve, reject) {
+            logInfo('Starting https server...');
+            let httpsOptions = {
+                key: fs.readFileSync(self.options.key),
+                cert: fs.readFileSync(self.options.cert)
+            };
+            self.httpsServer = Https.createServer(httpsOptions, self.app);
+            self.httpsServer.listen(self.options.port, () => {
+                logInfo('Listening on port %O', self.options.port);
+                resolve();
+            }).on('error', () => {
+                logError('Failed to start the server on port %O', self.options.port);
+                reject();
+            });
+        });
+    }
     start() {
         if (this.isHttps()) {
-            this.startHttpsServer();
+            return this.startHttpsServer();
         }
         else {
-            this.startHttpServer();
+            return this.startHttpServer();
         }
     }
     stop() {
         if (this.isHttps()) {
             this.httpsServer.close();
+            return Promise.resolve();
         }
         else {
             this.httpServer.close();
+            return Promise.resolve();
         }
     }
 }
