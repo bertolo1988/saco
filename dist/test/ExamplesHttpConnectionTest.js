@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 process.env.NODE_ENV = 'test';
-const path = require("path");
 const Saco = require("../src/Server");
+const path = require("path");
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 chai.should();
@@ -17,7 +17,6 @@ describe('testing basic CRUD operations', () => {
         server.start().then(() => {
             chai.request('localhost:' + options.port).get('/').then(res => {
                 res.should.have.status(200);
-                res.text.includes('<app-root>Loading...</app-root>');
                 server.stop().then(() => {
                     done();
                 });
@@ -30,7 +29,6 @@ describe('testing basic CRUD operations', () => {
         server.start().then(() => {
             chai.request('localhost:' + options.port).get('/').then(res => {
                 res.should.have.status(200);
-                res.text.includes('<div id=app></div>');
                 server.stop().then(() => {
                     done();
                 });

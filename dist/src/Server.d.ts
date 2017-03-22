@@ -3,7 +3,7 @@
 import { Application } from 'express';
 import * as Http from 'http';
 import * as Https from 'https';
-export interface SacoServerOptions {
+export interface ServerOptions {
     folder: string;
     file?: string;
     favicon?: string;
@@ -23,8 +23,8 @@ export declare class Server {
     app: Application;
     httpServer: Http.Server;
     httpsServer: Https.Server;
-    options: SacoServerOptions;
-    constructor(options: SacoServerOptions);
+    options: ServerOptions;
+    constructor(options: ServerOptions);
     configure(): void;
     startHttpServer(): Promise<any>;
     isHttps(): boolean;

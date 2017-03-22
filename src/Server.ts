@@ -12,7 +12,7 @@ import * as fs from 'fs';
 let logError: debug.IDebugger = debug('saco:error');
 let logInfo: debug.IDebugger = debug('saco:info');
 
-export interface SacoServerOptions {
+export interface ServerOptions {
     folder: string;
     file?: string;
     favicon?: string;
@@ -34,9 +34,9 @@ export class Server {
     app: Application = express();
     httpServer: Http.Server;
     httpsServer: Https.Server;
-    options: SacoServerOptions;
+    options: ServerOptions;
 
-    constructor(options: SacoServerOptions) {
+    constructor(options: ServerOptions) {
         this.options = Object.assign({}, this.DEFAULT_OPTIONS, options);
         logInfo('Options: %O', this.options);
         this.configure();
@@ -110,13 +110,16 @@ export class Server {
     }
 
     stop(): Promise<any> {
-        if (this.isHttps()) {
-            this.httpsServer.close();
-            return Promise.resolve();
-        } else {
-            this.httpServer.close();
-            return Promise.resolve();
-        }
+        let self = this;
+        return new Promise(function(resolve, reject) {
+            if (self.isHttps()) {
+                self.httpsServer.on('close', resolve).on('error', reject);
+                self.httpsServer.close();
+            } else {
+                self.httpServer.on('close', resolve).on('error', reject);
+                self.httpServer.close();
+            }
+        });
     }
 
 };
