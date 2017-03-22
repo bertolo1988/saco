@@ -1,4 +1,4 @@
-import { Request, Response, Application, Router } from 'express';
+import { Request, Response, Application } from 'express';
 import * as Http from 'http';
 import * as Https from 'https';
 import * as express from 'express';
@@ -12,21 +12,20 @@ import * as fs from 'fs';
 let logError: debug.IDebugger = debug('saco:error');
 let logInfo: debug.IDebugger = debug('saco:info');
 
-export interface SacoServerOptions {
+export interface ServerOptions {
     folder: string;
-    file: string;
-    favicon: string;
-    port: number;
-    dateformat: string;
-    verbose: boolean;
-    key: string;
-    cert: string;
+    file?: string;
+    favicon?: string;
+    port?: number;
+    dateformat?: string;
+    verbose?: boolean;
+    key?: string;
+    cert?: string;
 }
 
 export class Server {
 
     readonly DEFAULT_OPTIONS = {
-        folder: path.join(__dirname, 'dist'),
         file: 'index.html',
         port: 4200,
         dateformat: 'GMT:HH:MM:ss dd-mmm-yy Z',
@@ -35,9 +34,9 @@ export class Server {
     app: Application = express();
     httpServer: Http.Server;
     httpsServer: Https.Server;
-    options: SacoServerOptions;
+    options: ServerOptions;
 
-    constructor(options: SacoServerOptions) {
+    constructor(options: ServerOptions) {
         this.options = Object.assign({}, this.DEFAULT_OPTIONS, options);
         logInfo('Options: %O', this.options);
         this.configure();
@@ -65,22 +64,17 @@ export class Server {
         }
     }
 
-    startHttpServer() {
-        logInfo('Starting http server...');
-        this.httpServer = this.app.listen(this.options.port, () => {
-            logInfo('Listening on port %O', this.options.port);
-        });
-    }
-
-    startHttpsServer() {
-        logInfo('Starting https server...');
-        let httpsOptions = {
-            key: fs.readFileSync(this.options.key),
-            cert: fs.readFileSync(this.options.cert)
-        };
-        this.httpsServer = Https.createServer(httpsOptions, this.app);
-        this.httpsServer.listen(this.options.port, () => {
-            logInfo('Listening on port %O', this.options.port);
+    startHttpServer(): Promise<any> {
+        let self = this;
+        return new Promise(function(resolve, reject) {
+            logInfo('Starting http server...');
+            self.httpServer = self.app.listen(self.options.port, () => {
+                logInfo('Listening on port %O', self.options.port);
+                resolve();
+            }).on('error', () => {
+                logError('Failed to start the server on port %O', self.options.port);
+                reject();
+            });
         });
     }
 
@@ -88,20 +82,44 @@ export class Server {
         return this.options.key != null && this.options.cert != null;
     }
 
-    start() {
+    startHttpsServer(): Promise<any> {
+        let self = this;
+        return new Promise(function(resolve, reject) {
+            logInfo('Starting https server...');
+            let httpsOptions = {
+                key: fs.readFileSync(self.options.key),
+                cert: fs.readFileSync(self.options.cert)
+            };
+            self.httpsServer = Https.createServer(httpsOptions, self.app);
+            self.httpsServer.listen(self.options.port, () => {
+                logInfo('Listening on port %O', self.options.port);
+                resolve();
+            }).on('error', () => {
+                logError('Failed to start the server on port %O', self.options.port);
+                reject();
+            });
+        });
+    }
+
+    start(): Promise<any> {
         if (this.isHttps()) {
-            this.startHttpsServer();
+            return this.startHttpsServer();
         } else {
-            this.startHttpServer();
+            return this.startHttpServer();
         }
     }
 
-    stop() {
-        if (this.isHttps()) {
-            this.httpsServer.close();
-        } else {
-            this.httpServer.close();
-        }
+    stop(): Promise<any> {
+        let self = this;
+        return new Promise(function(resolve, reject) {
+            if (self.isHttps()) {
+                self.httpsServer.on('close', resolve).on('error', reject);
+                self.httpsServer.close();
+            } else {
+                self.httpServer.on('close', resolve).on('error', reject);
+                self.httpServer.close();
+            }
+        });
     }
 
 };
