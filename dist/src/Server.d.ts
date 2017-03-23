@@ -21,14 +21,12 @@ export declare class Server {
         verbose: boolean;
     };
     app: Application;
-    httpServer: Http.Server;
-    httpsServer: Https.Server;
+    server: Http.Server | Https.Server;
     options: ServerOptions;
     constructor(options: ServerOptions);
-    configure(): void;
-    startHttpServer(): Promise<any>;
-    isHttps(): boolean;
-    startHttpsServer(): Promise<any>;
+    private configure();
+    private isHttps();
+    private createServer();
     start(): Promise<any>;
     stop(): Promise<any>;
 }

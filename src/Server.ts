@@ -32,8 +32,7 @@ export class Server {
         verbose: false
     };
     app: Application = express();
-    httpServer: Http.Server;
-    httpsServer: Https.Server;
+    server: Http.Server | Https.Server;
     options: ServerOptions;
 
     constructor(options: ServerOptions) {
@@ -42,7 +41,7 @@ export class Server {
         this.configure();
     }
 
-    configure() {
+    private configure() {
         this.app.use(compression());
         if (this.options.verbose) {
             this.app.use((req: Request, res: Response, next: Function) => {
@@ -64,34 +63,29 @@ export class Server {
         }
     }
 
-    startHttpServer(): Promise<any> {
-        let self = this;
-        return new Promise(function(resolve, reject) {
-            logInfo('Starting http server...');
-            self.httpServer = self.app.listen(self.options.port, () => {
-                logInfo('Listening on port %O', self.options.port);
-                resolve();
-            }).on('error', () => {
-                logError('Failed to start the server on port %O', self.options.port);
-                reject();
-            });
-        });
-    }
-
-    isHttps() {
+    private isHttps(): boolean {
         return this.options.key != null && this.options.cert != null;
     }
 
-    startHttpsServer(): Promise<any> {
-        let self = this;
-        return new Promise(function(resolve, reject) {
+    private createServer(): Https.Server | Http.Server {
+        if (this.isHttps()) {
             logInfo('Starting https server...');
             let httpsOptions = {
-                key: fs.readFileSync(self.options.key),
-                cert: fs.readFileSync(self.options.cert)
+                key: fs.readFileSync(this.options.key),
+                cert: fs.readFileSync(this.options.cert)
             };
-            self.httpsServer = Https.createServer(httpsOptions, self.app);
-            self.httpsServer.listen(self.options.port, () => {
+            return Https.createServer(httpsOptions, this.app);
+        } else {
+            logInfo('Starting http server...');
+            return Http.createServer(this.app);
+        }
+    }
+
+    start(): Promise<any> {
+        let self = this;
+        return new Promise((resolve, reject) => {
+            self.server = self.createServer();
+            self.server.listen(self.options.port, () => {
                 logInfo('Listening on port %O', self.options.port);
                 resolve();
             }).on('error', () => {
@@ -99,26 +93,13 @@ export class Server {
                 reject();
             });
         });
-    }
-
-    start(): Promise<any> {
-        if (this.isHttps()) {
-            return this.startHttpsServer();
-        } else {
-            return this.startHttpServer();
-        }
     }
 
     stop(): Promise<any> {
         let self = this;
-        return new Promise(function(resolve, reject) {
-            if (self.isHttps()) {
-                self.httpsServer.on('close', resolve).on('error', reject);
-                self.httpsServer.close();
-            } else {
-                self.httpServer.on('close', resolve).on('error', reject);
-                self.httpServer.close();
-            }
+        return new Promise((resolve, reject) => {
+            self.server.on('close', resolve).on('error', reject);
+            self.server.close();
         });
     }
 

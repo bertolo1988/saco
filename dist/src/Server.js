@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const Http = require("http");
 const Https = require("https");
 const express = require("express");
 const debug = require("debug");
@@ -44,32 +45,28 @@ class Server {
             this.app.use(favicon(path.join(this.options.folder, this.options.favicon)));
         }
     }
-    startHttpServer() {
-        let self = this;
-        return new Promise(function (resolve, reject) {
-            logInfo('Starting http server...');
-            self.httpServer = self.app.listen(self.options.port, () => {
-                logInfo('Listening on port %O', self.options.port);
-                resolve();
-            }).on('error', () => {
-                logError('Failed to start the server on port %O', self.options.port);
-                reject();
-            });
-        });
-    }
     isHttps() {
         return this.options.key != null && this.options.cert != null;
     }
-    startHttpsServer() {
-        let self = this;
-        return new Promise(function (resolve, reject) {
+    createServer() {
+        if (this.isHttps()) {
             logInfo('Starting https server...');
             let httpsOptions = {
-                key: fs.readFileSync(self.options.key),
-                cert: fs.readFileSync(self.options.cert)
+                key: fs.readFileSync(this.options.key),
+                cert: fs.readFileSync(this.options.cert)
             };
-            self.httpsServer = Https.createServer(httpsOptions, self.app);
-            self.httpsServer.listen(self.options.port, () => {
+            return Https.createServer(httpsOptions, this.app);
+        }
+        else {
+            logInfo('Starting http server...');
+            return Http.createServer(this.app);
+        }
+    }
+    start() {
+        let self = this;
+        return new Promise((resolve, reject) => {
+            self.server = self.createServer();
+            self.server.listen(self.options.port, () => {
                 logInfo('Listening on port %O', self.options.port);
                 resolve();
             }).on('error', () => {
@@ -78,25 +75,11 @@ class Server {
             });
         });
     }
-    start() {
-        if (this.isHttps()) {
-            return this.startHttpsServer();
-        }
-        else {
-            return this.startHttpServer();
-        }
-    }
     stop() {
         let self = this;
-        return new Promise(function (resolve, reject) {
-            if (self.isHttps()) {
-                self.httpsServer.on('close', resolve).on('error', reject);
-                self.httpsServer.close();
-            }
-            else {
-                self.httpServer.on('close', resolve).on('error', reject);
-                self.httpServer.close();
-            }
+        return new Promise((resolve, reject) => {
+            self.server.on('close', resolve).on('error', reject);
+            self.server.close();
         });
     }
 }
