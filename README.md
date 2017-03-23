@@ -8,7 +8,7 @@ Saco promotes separation of concerns, quality, best practices and testability wh
 ...you avoid the following common mistakes:
 
 * using development servers in production
-* poluting your front end project with dependencies that are only used on server launch
+* poluting your front end project with several dependencies that are only used in the production server launch
 * having your front end app on the same server of your back end server
 * using non [nodejs](https://nodejs.org/en/) solutions
 
