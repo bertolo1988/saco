@@ -3,6 +3,9 @@
 A pre customized, express server for single page web apps that aims to be production ready.
 Saco promotes separation of concerns, quality, best practices and testability when deploying front end single page web apps. 
 
+[![dependencies Status](https://david-dm.org/bertolo1988/saco/status.svg)](https://david-dm.org/bertolo1988/saco)
+[![npm version](https://badge.fury.io/js/saco.svg)](https://badge.fury.io/js/saco)
+
 ## By using Saco
 
 ...you avoid the following common mistakes:
@@ -24,9 +27,6 @@ and benefit from having:
 * [customizable format timestamps](https://github.com/felixge/node-dateformat)
 * clusterization - not yet available
 * minification - not yet available
-
-[![dependencies Status](https://david-dm.org/bertolo1988/saco/status.svg)](https://david-dm.org/bertolo1988/saco)
-[![npm version](https://badge.fury.io/js/saco.svg)](https://badge.fury.io/js/saco)
 
 ## How to use
 
