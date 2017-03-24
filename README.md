@@ -25,7 +25,7 @@ and benefit from having:
 * gzip with [compression](https://github.com/expressjs/compression)
 * customizable logging with [debug](https://github.com/visionmedia/debug)
 * [customizable format timestamps](https://github.com/felixge/node-dateformat)
-* clusterization - not yet available
+* [multi core server](https://nodejs.org/docs/latest/api/cluster.html)
 * minification - not yet available
 
 ## How to use
@@ -48,7 +48,7 @@ new Saco.Server( { "folder" : path.join(__dirname, '/dist' )} ).start();
 
 ## Demo
 
-`npm run http-demo` or `npm run https-demo` and it will host a sample angular 2 single page web app built with [angular-cli](https://github.com/angular/angular-cli).
+`npm run http-demo`, `npm run https-demo` or `npm run cluster-https-demo`
 
 ## Options
 
@@ -82,13 +82,15 @@ readonly DEFAULT_OPTIONS = {
 
 In order to have an https server `key` and `cert` paths must be defined.
 
-## Testing
-
-`npm run test`
+Workers has a maximum value depending on the number of CPUs.
 
 ## Linting
 
 `npm run lint`
+
+## Testing
+
+`npm run test`
 
 ## Logging
 
