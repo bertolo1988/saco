@@ -26,7 +26,7 @@ class Server {
         };
         this.app = express();
         this.options = Object.assign({}, this.DEFAULT_OPTIONS, options);
-        this.options.workers = this.options.workers > NUM_CPUS ? NUM_CPUS : this.options.workers;
+        this.options.workers = Math.min(this.options.workers, NUM_CPUS);
         this.configure();
     }
     configure() {
@@ -70,21 +70,29 @@ class Server {
     startMaster() {
         var self = this;
         return new Promise((resolve, reject) => {
-            logInfo(`Master ${process.pid} is running`);
-            logInfo('Options: %O', self.options);
-            for (let i = 0; i < self.options.workers; i++) {
-                cluster.fork();
+            if (self.options.workers > 1) {
+                for (let i = 0; i < self.options.workers; i++) {
+                    cluster.fork();
+                }
+                cluster.on('exit', (worker, code, signal) => {
+                    logInfo(`worker ${worker.process.pid} died`);
+                    // kill the other workers.
+                    for (let id in cluster.workers) {
+                        cluster.workers[id].kill();
+                    }
+                    // exit the master process
+                    process.exit(0);
+                });
             }
-            cluster.on('exit', (worker, code, signal) => {
-                logInfo(`worker ${worker.process.pid} died`);
-            });
+            else {
+                self.startWorker();
+            }
             resolve();
         });
     }
     startWorker() {
         var self = this;
         return new Promise((resolve, reject) => {
-            logInfo(`Starting worker ${process.pid}...`);
             self.server = self.createServer();
             self.server.listen(self.options.port, () => {
                 logInfo('Listening on port %O', self.options.port);
@@ -93,19 +101,21 @@ class Server {
                 logError('Failed to start the server on port %O', self.options.port);
                 reject();
             });
-            logInfo(`Worker ${process.pid} started`);
         });
     }
     start() {
         if (cluster.isMaster) {
+            logInfo(`Starting master %O...`, process.pid);
+            logInfo('Options: %O', this.options);
             return this.startMaster();
         }
         else {
+            logInfo(`Starting worker %O...`, process.pid);
             return this.startWorker();
         }
     }
     stop() {
-        let self = this;
+        var self = this;
         return new Promise((resolve, reject) => {
             self.server.on('close', resolve).on('error', reject);
             self.server.close();
