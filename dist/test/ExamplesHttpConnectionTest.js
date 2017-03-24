@@ -12,7 +12,7 @@ const vueCliDemoPath = path.join(__dirname, '../../examples/webpack-vue-cli');
 const TESTS_PORT = 3028;
 describe('testing basic CRUD operations', () => {
     it('should launch angular-cli example', (done) => {
-        let options = { folder: angularCliDemoPath, port: TESTS_PORT, workers: 3 };
+        let options = { folder: angularCliDemoPath, port: TESTS_PORT, workers: 1 };
         let server = new Saco.Server(options);
         server.start().then(() => {
             chai.request('localhost:' + options.port).get('/').then(res => {
@@ -24,7 +24,7 @@ describe('testing basic CRUD operations', () => {
         });
     });
     it('should launch webpack-vue-cli example', (done) => {
-        let options = { folder: vueCliDemoPath, port: TESTS_PORT };
+        let options = { folder: vueCliDemoPath, port: TESTS_PORT, workers: 1 };
         let server = new Saco.Server(options);
         server.start().then(() => {
             chai.request('localhost:' + options.port).get('/').then(res => {
