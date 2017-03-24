@@ -29,6 +29,7 @@ export declare class Server {
     private configure();
     private isHttps();
     private createServer();
+    private killWorkers();
     private startMaster();
     private startWorker();
     start(): Promise<any>;

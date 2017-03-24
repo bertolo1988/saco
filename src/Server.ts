@@ -87,6 +87,12 @@ export class Server {
         }
     }
 
+    private killWorkers() {
+        for (let id in cluster.workers) {
+            cluster.workers[id].kill();
+        }
+    }
+
     private startMaster(): Promise<any> {
         var self = this;
         return new Promise((resolve, reject) => {
@@ -96,11 +102,7 @@ export class Server {
                 }
                 cluster.on('exit', (worker, code, signal) => {
                     logInfo(`worker ${worker.process.pid} died`);
-                    // kill the other workers.
-                    for (let id in cluster.workers) {
-                        cluster.workers[id].kill();
-                    }
-                    // exit the master process
+                    self.killWorkers();
                     process.exit(0);
                 });
             } else {
