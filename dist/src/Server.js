@@ -9,26 +9,31 @@ const path = require("path");
 const datefmt = require("dateformat");
 const favicon = require("serve-favicon");
 const fs = require("fs");
-let logError = debug('saco:error');
-let logInfo = debug('saco:info');
+const cluster = require("cluster");
+const os = require("os");
+const process = require("process");
+const NUM_CPUS = os.cpus().length;
+const logError = debug('saco:error');
+const logInfo = debug('saco:info');
 class Server {
     constructor(options) {
         this.DEFAULT_OPTIONS = {
             file: 'index.html',
             port: 4200,
             dateformat: 'GMT:HH:MM:ss dd-mmm-yy Z',
-            verbose: false
+            verbose: false,
+            workers: 1
         };
         this.app = express();
         this.options = Object.assign({}, this.DEFAULT_OPTIONS, options);
-        logInfo('Options: %O', this.options);
+        this.options.workers = this.options.workers > NUM_CPUS ? NUM_CPUS : this.options.workers;
         this.configure();
     }
     configure() {
         this.app.use(compression());
         if (this.options.verbose) {
             this.app.use((req, res, next) => {
-                logInfo(datefmt(new Date(), this.options.dateformat), '\t:', req.method, req.url);
+                logInfo(datefmt(new Date(), this.options.dateformat), 'pid:', process.pid, '\t:', req.method, req.url);
                 next();
             });
         }
@@ -62,9 +67,24 @@ class Server {
             return Http.createServer(this.app);
         }
     }
-    start() {
-        let self = this;
+    startMaster() {
+        var self = this;
         return new Promise((resolve, reject) => {
+            logInfo(`Master ${process.pid} is running`);
+            logInfo('Options: %O', self.options);
+            for (let i = 0; i < self.options.workers; i++) {
+                cluster.fork();
+            }
+            cluster.on('exit', (worker, code, signal) => {
+                logInfo(`worker ${worker.process.pid} died`);
+            });
+            resolve();
+        });
+    }
+    startWorker() {
+        var self = this;
+        return new Promise((resolve, reject) => {
+            logInfo(`Starting worker ${process.pid}...`);
             self.server = self.createServer();
             self.server.listen(self.options.port, () => {
                 logInfo('Listening on port %O', self.options.port);
@@ -73,7 +93,16 @@ class Server {
                 logError('Failed to start the server on port %O', self.options.port);
                 reject();
             });
+            logInfo(`Worker ${process.pid} started`);
         });
+    }
+    start() {
+        if (cluster.isMaster) {
+            return this.startMaster();
+        }
+        else {
+            return this.startWorker();
+        }
     }
     stop() {
         let self = this;

@@ -63,6 +63,7 @@ export interface ServerOptions {
     verbose?: boolean;
     key?: string;
     cert?: string;
+    workers?: number;
 }
 ```
 Values with `?` are optional.
@@ -74,7 +75,8 @@ readonly DEFAULT_OPTIONS = {
     file: 'index.html',
     port: 4200,
     dateformat: 'GMT:HH:MM:ss dd-mmm-yy Z',
-    verbose: false
+    verbose: false,
+    workers: 1
 };
 ```
 

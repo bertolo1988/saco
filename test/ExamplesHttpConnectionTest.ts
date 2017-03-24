@@ -16,7 +16,7 @@ const TESTS_PORT = 3028;
 describe('testing basic CRUD operations', () => {
 
     it('should launch angular-cli example', (done) => {
-        let options: Saco.ServerOptions = { folder: angularCliDemoPath, port: TESTS_PORT };
+        let options: Saco.ServerOptions = { folder: angularCliDemoPath, port: TESTS_PORT, workers: 3 };
         let server: Saco.Server = new Saco.Server(options);
         server.start().then(() => {
             chai.request('localhost:' + options.port).get('/').then(res => {

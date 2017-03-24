@@ -12,6 +12,7 @@ export interface ServerOptions {
     verbose?: boolean;
     key?: string;
     cert?: string;
+    workers?: number;
 }
 export declare class Server {
     readonly DEFAULT_OPTIONS: {
@@ -19,6 +20,7 @@ export declare class Server {
         port: number;
         dateformat: string;
         verbose: boolean;
+        workers: number;
     };
     app: Application;
     server: Http.Server | Https.Server;
@@ -27,6 +29,8 @@ export declare class Server {
     private configure();
     private isHttps();
     private createServer();
+    private startMaster();
+    private startWorker();
     start(): Promise<any>;
     stop(): Promise<any>;
 }
