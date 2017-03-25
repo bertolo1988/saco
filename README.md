@@ -15,6 +15,7 @@ Saco promotes separation of concerns, quality, best practices and testability wh
 * poluting your front end project with several dependencies that are only used in the production server launch
 * having your front end app on the same server of your back end server
 * using non [nodejs](https://nodejs.org/en/) solutions
+* misconfiguration
 
 and benefit from having: 
 
@@ -27,6 +28,7 @@ and benefit from having:
 * customizable logging with [debug](https://github.com/visionmedia/debug)
 * [customizable format timestamps](https://github.com/felixge/node-dateformat)
 * [multi core server](https://nodejs.org/docs/latest/api/cluster.html)
+* resource caching
 * minification - not yet available
 
 ## How to use
@@ -45,7 +47,9 @@ const Saco = require('saco');
 new Saco.Server( { "folder" : path.join(__dirname, '/dist' )} ).start();
 ```
 
-5. Run it as: `DEBUG:saco:* node my-script.js`.
+5. Run it as: `cross-env NODE_ENV=production DEBUG=saco:* node my-script.js`.
+
+Notice that we used [cross-env](https://github.com/kentcdodds/cross-env) to set the environment variables. You may use another method.
 
 ## Demo
 
@@ -65,6 +69,7 @@ export interface ServerOptions {
     key?: string;
     cert?: string;
     workers?: number;
+    maxAge?:number;
 }
 ```
 Values with `?` are optional.
@@ -77,7 +82,8 @@ readonly DEFAULT_OPTIONS = {
     port: 4200,
     dateformat: 'GMT:HH:MM:ss dd-mmm-yy Z',
     verbose: false,
-    workers: 1
+    workers: 1,
+    maxAge: 43200000
 };
 ```
 

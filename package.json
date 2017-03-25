@@ -1,6 +1,6 @@
 {
     "name": "saco",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "description": "A NodeJS production server for single page web apps",
     "main": "dist/Server.js",
     "engines": {
@@ -9,12 +9,12 @@
     "scripts": {
         "lint": "tslint --fix --project .",
         "pretest": "npm run lint && npm run build",
-        "test": "mocha dist/test --recursive",
+        "test": "cross-env NODE_ENV=test mocha dist/test --recursive",
         "build": "tsc -p .",
         "watch": "tsc -w",
-        "http-demo": "cross-env DEBUG=saco:* node demo/http-demo.js",
-        "https-demo": "cross-env DEBUG=saco:* node demo/https-demo.js",
-        "cluster-https-demo": "cross-env DEBUG=saco:* node demo/cluster-https-demo.js",
+        "http-demo": "cross-env NODE_ENV=production DEBUG=saco:* node demo/http-demo.js",
+        "https-demo": "cross-env NODE_ENV=production DEBUG=saco:* node demo/https-demo.js",
+        "cluster-https-demo": "cross-env NODE_ENV=production DEBUG=saco:* node demo/cluster-https-demo.js",
         "prepublish": "npm run lint && npm run build"
     },
     "repository": {
@@ -41,7 +41,7 @@
         "@types/compression": "0.0.33",
         "@types/debug": "0.0.29",
         "@types/mocha": "^2.2.40",
-        "@types/node": "^7.0.8",
+        "@types/node": "^7.0.11",
         "@types/request": "0.0.41",
         "chai": "^3.5.0",
         "chai-http": "^3.0.0",
