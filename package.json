@@ -4,7 +4,7 @@
     "description": "A NodeJS production server for single page web apps",
     "main": "dist/Server.js",
     "engines": {
-        "node": ">= 7.0.0"
+        "node": ">= 5.0.0"
     },
     "scripts": {
         "lint": "tslint --fix --project .",
