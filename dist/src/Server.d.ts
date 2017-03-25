@@ -13,6 +13,7 @@ export interface ServerOptions {
     key?: string;
     cert?: string;
     workers?: number;
+    maxAge?: number;
 }
 export declare class Server {
     readonly DEFAULT_OPTIONS: {
@@ -21,11 +22,13 @@ export declare class Server {
         dateformat: string;
         verbose: boolean;
         workers: number;
+        maxAge: number;
     };
     app: Application;
     server: Http.Server | Https.Server;
     options: ServerOptions;
     constructor(options: ServerOptions);
+    private setMaxSockets();
     private configure();
     private isHttps();
     private createServer();

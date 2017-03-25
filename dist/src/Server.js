@@ -22,12 +22,19 @@ class Server {
             port: 4200,
             dateformat: 'GMT:HH:MM:ss dd-mmm-yy Z',
             verbose: false,
-            workers: 1
+            workers: 1,
+            maxAge: 43200000
         };
         this.app = express();
         this.options = Object.assign({}, this.DEFAULT_OPTIONS, options);
         this.options.workers = Math.min(this.options.workers, NUM_CPUS);
         this.configure();
+    }
+    setMaxSockets() {
+        Http.globalAgent.maxSockets = Infinity;
+        Https.globalAgent.maxSockets = Infinity;
+        logInfo('Http max sockets set to %O', Http.globalAgent.maxSockets);
+        logInfo('Https max sockets set to %O', Https.globalAgent.maxSockets);
     }
     configure() {
         this.app.use(compression());
@@ -37,7 +44,7 @@ class Server {
                 next();
             });
         }
-        this.app.use(express.static(this.options.folder));
+        this.app.use(express.static(this.options.folder, { maxAge: this.options.maxAge }));
         this.app.get('/*', (req, res) => {
             res.sendFile(path.join(this.options.folder, this.options.file));
         });
@@ -108,6 +115,7 @@ class Server {
         if (cluster.isMaster) {
             logInfo(`Starting master %O...`, process.pid);
             logInfo('Options: %O', this.options);
+            this.setMaxSockets();
             return this.startMaster();
         }
         else {
