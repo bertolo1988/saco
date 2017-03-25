@@ -5,6 +5,7 @@ Saco promotes separation of concerns, quality, best practices and testability wh
 
 [![dependencies Status](https://david-dm.org/bertolo1988/saco/status.svg)](https://david-dm.org/bertolo1988/saco)
 [![npm version](https://badge.fury.io/js/saco.svg)](https://badge.fury.io/js/saco)
+[![Build Status](https://travis-ci.org/bertolo1988/saco.svg?branch=master)](https://travis-ci.org/bertolo1988/saco)
 
 ## By using Saco
 
