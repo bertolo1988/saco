@@ -1,5 +1,11 @@
 const path = require('path');
-const angularCliDemoPath = path.join(__dirname, '../examples/angular-cli');
+const angularCliDemoPath = path.join(__dirname, '../examples/webpack-vue-cli');
 
 let Saco = require('../dist/src/Server');
-new Saco.Server({ folder: angularCliDemoPath, port: 3022, verbose: true }).start();
+var server = new Saco.Server({ folder: angularCliDemoPath, port: 3022, verbose: true });
+
+server.start().then(() => {
+    return server.stop();
+}).catch(err => {
+    console.log(err);
+});

@@ -1,3 +1,5 @@
+process.env.NODE_ENV = 'test';
+
 import * as Saco from '../src/Server';
 import * as path from 'path';
 

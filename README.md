@@ -82,14 +82,14 @@ readonly DEFAULT_OPTIONS = {
     port: 4200,
     dateformat: 'GMT:HH:MM:ss dd-mmm-yy Z',
     verbose: false,
-    workers: 1,
+    workers: os.cpus().length,
     maxAge: 43200000
 };
 ```
 
 In order to have an https server `key` and `cert` paths must be defined.
 
-Workers has a maximum value depending on the number of CPUs.
+Workers has a default and maximum value equal to the number of cores of your processor.
 
 ## Linting
 

@@ -24,17 +24,18 @@ export declare class Server {
         workers: number;
         maxAge: number;
     };
+    startedWorkersCount: number;
     app: Application;
     server: Http.Server | Https.Server;
     options: ServerOptions;
     constructor(options: ServerOptions);
-    private setMaxSockets();
-    private configure();
     private isHttps();
+    private setMaxSockets();
+    private appConfigure();
     private createServer();
-    private killWorkers();
     private startMaster();
+    private sendMaster(pid, msg);
     private startWorker();
-    start(): Promise<any>;
+    start(): Promise<number>;
     stop(): Promise<any>;
 }
