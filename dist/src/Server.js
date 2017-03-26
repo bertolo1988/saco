@@ -52,7 +52,7 @@ class Server {
         this.app.use(compression());
         if (this.options.verbose) {
             this.app.use((req, res, next) => {
-                logInfo(datefmt(new Date(), this.options.dateformat), 'pid:', process.pid, '\t:', req.method, req.url);
+                logInfo(datefmt(new Date(), this.options.dateformat), 'pid:', process.pid, '\t', req.method, '\t', req.url);
                 next();
             });
         }
@@ -100,7 +100,7 @@ class Server {
                 logInfo('Process %O listening on port %O', data.pid, self.options.port);
                 self.startedWorkersCount++;
                 if (self.startedWorkersCount === self.options.workers) {
-                    logInfo('All workers connected successfully');
+                    logInfo('Server ready');
                     resolve(self.startedWorkersCount);
                 }
             });
@@ -114,11 +114,15 @@ class Server {
     }
     startWorker() {
         var self = this;
-        self.server = self.createServer();
-        self.server.listen(self.options.port, () => {
-            self.sendMaster(process.pid, ClusterMessage.WORKER_LISTENING);
-        }).on('error', () => {
-            logError('Failed to start the server on port %O', self.options.port);
+        return new Promise(function (resolve, reject) {
+            self.server = self.createServer();
+            self.server.listen(self.options.port, () => {
+                self.sendMaster(process.pid, ClusterMessage.WORKER_LISTENING);
+                resolve();
+            }).on('error', () => {
+                logError('Failed to start the server on port %O', self.options.port);
+                reject();
+            });
         });
     }
     start() {
@@ -145,5 +149,4 @@ class Server {
     }
 }
 exports.Server = Server;
-;
 //# sourceMappingURL=Server.js.map

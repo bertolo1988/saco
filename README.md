@@ -22,7 +22,7 @@ and benefit from having:
 * http && https static folder hosting
 * default redirection to an entry point
 * high quality and tested code launching your production server
-* beautifully bootstrapped code with stop and start methods
+* beautifully bootstrapped cluster with stop and start methods
 * favicon hosted with [serve-favicon](https://github.com/expressjs/serve-favicon)
 * gzip with [compression](https://github.com/expressjs/compression)
 * customizable logging with [debug](https://github.com/visionmedia/debug)

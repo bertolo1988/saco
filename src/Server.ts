@@ -1,3 +1,4 @@
+import { ServerOptions } from './ServerOptions';
 import { Request, Response, Application } from 'express';
 import * as Http from 'http';
 import * as Https from 'https';
@@ -18,19 +19,6 @@ const logInfo: debug.IDebugger = debug('saco:info');
 
 enum ClusterMessage {
     WORKER_LISTENING
-}
-
-export interface ServerOptions {
-    folder: string;
-    file?: string;
-    favicon?: string;
-    port?: number;
-    dateformat?: string;
-    verbose?: boolean;
-    key?: string;
-    cert?: string;
-    workers?: number;
-    maxAge?: number;
 }
 
 export class Server {
@@ -73,7 +61,7 @@ export class Server {
         this.app.use(compression());
         if (this.options.verbose) {
             this.app.use((req: Request, res: Response, next: Function) => {
-                logInfo(datefmt(new Date(), this.options.dateformat), 'pid:', process.pid, '\t:', req.method, req.url);
+                logInfo(datefmt(new Date(), this.options.dateformat), 'pid:', process.pid, '\t', req.method, '\t', req.url);
                 next();
             });
         }
@@ -122,7 +110,7 @@ export class Server {
                 logInfo('Process %O listening on port %O', data.pid, self.options.port);
                 self.startedWorkersCount++;
                 if (self.startedWorkersCount === self.options.workers) {
-                    logInfo('All workers connected successfully');
+                    logInfo('Server ready');
                     resolve(self.startedWorkersCount);
                 }
             });
@@ -136,13 +124,17 @@ export class Server {
         process.send({ pid, msg });
     }
 
-    private startWorker() {
+    private startWorker(): Promise<any> {
         var self = this;
-        self.server = self.createServer();
-        self.server.listen(self.options.port, () => {
-            self.sendMaster(process.pid, ClusterMessage.WORKER_LISTENING);
-        }).on('error', () => {
-            logError('Failed to start the server on port %O', self.options.port);
+        return new Promise(function(resolve, reject) {
+            self.server = self.createServer();
+            self.server.listen(self.options.port, () => {
+                self.sendMaster(process.pid, ClusterMessage.WORKER_LISTENING);
+                resolve();
+            }).on('error', () => {
+                logError('Failed to start the server on port %O', self.options.port);
+                reject();
+            });
         });
     }
 
@@ -169,4 +161,4 @@ export class Server {
         });
     }
 
-};
+}
