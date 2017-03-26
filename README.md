@@ -19,8 +19,8 @@ Saco promotes separation of concerns, quality, best practices and testability wh
 
 and benefit from having: 
 
+* [expressjs](https://expressjs.com/) properly configured for production
 * http && https static folder hosting
-* default redirection to an entry point
 * high quality and tested code launching your production server
 * beautifully bootstrapped cluster with stop and start methods
 * favicon hosted with [serve-favicon](https://github.com/expressjs/serve-favicon)
@@ -30,6 +30,10 @@ and benefit from having:
 * [multi core server](https://nodejs.org/docs/latest/api/cluster.html)
 * resource caching
 * minification - not yet available
+
+## Demo
+
+`npm run http-demo`, `npm run https-demo` or `npm run cluster-https-demo`
 
 ## How to use
 
@@ -51,9 +55,24 @@ new Saco.Server( { "folder" : path.join(__dirname, '/dist' )} ).start();
 
 Notice that we used [cross-env](https://github.com/kentcdodds/cross-env) to set the environment variables. You may use another method.
 
-## Demo
+## Server API
 
-`npm run http-demo`, `npm run https-demo` or `npm run cluster-https-demo`
+```
+constructor(options: ServerOptions) 
+```
+
+```
+// returnes a promise that resolves only after all workers
+// have sent ClusterMessage.WORKER_LISTENING to the master
+start(): Promise<number>
+```
+
+```
+// returnes a promise that resolves only after all
+// workers have send 'exit' event to the master
+stop(): Promise<any> 
+```
+
 
 ## Options
 
@@ -82,7 +101,7 @@ readonly DEFAULT_OPTIONS = {
     port: 4200,
     dateformat: 'GMT:HH:MM:ss dd-mmm-yy Z',
     verbose: false,
-    workers: os.cpus().length,
+    workers: os.cpus().length, // equals number of cpu cores
     maxAge: 43200000
 };
 ```

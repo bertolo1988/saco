@@ -138,6 +138,8 @@ export class Server {
         });
     }
 
+    // returnes a promise that resolves only after all workers
+    // have sent ClusterMessage.WORKER_LISTENING to the master
     start(): Promise<number> {
         var self = this;
         return new Promise(function(resolve, reject) {
@@ -153,6 +155,8 @@ export class Server {
         });
     }
 
+    // returnes a promise that resolves only after all
+    // workers have send 'exit' event to the master
     stop(): Promise<any> {
         return new Promise(function(resolve, reject) {
             cluster.disconnect(() => {

@@ -125,6 +125,8 @@ class Server {
             });
         });
     }
+    // returnes a promise that resolves only after all workers
+    // have sent ClusterMessage.WORKER_LISTENING to the master
     start() {
         var self = this;
         return new Promise(function (resolve, reject) {
@@ -140,6 +142,8 @@ class Server {
             }
         });
     }
+    // returnes a promise that resolves only after all
+    // workers have send 'exit' event to the master
     stop() {
         return new Promise(function (resolve, reject) {
             cluster.disconnect(() => {
