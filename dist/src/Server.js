@@ -52,7 +52,7 @@ class Server {
         this.app.use(compression());
         if (this.options.verbose) {
             this.app.use((req, res, next) => {
-                logInfo(datefmt(new Date(), this.options.dateformat), 'pid:', process.pid, '\t', req.method, '\t', req.url);
+                logInfo(datefmt(new Date(), this.options.dateformat), 'pid:', process.pid, 'ip:', req.ip, '\t', req.method, '\t', req.url);
                 next();
             });
         }

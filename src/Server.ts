@@ -61,7 +61,7 @@ export class Server {
         this.app.use(compression());
         if (this.options.verbose) {
             this.app.use((req: Request, res: Response, next: Function) => {
-                logInfo(datefmt(new Date(), this.options.dateformat), 'pid:', process.pid, '\t', req.method, '\t', req.url);
+                logInfo(datefmt(new Date(), this.options.dateformat), 'pid:', process.pid, 'ip:', req.ip, '\t', req.method, '\t', req.url);
                 next();
             });
         }
