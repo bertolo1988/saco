@@ -1,8 +1,8 @@
 {
     "name": "saco",
-    "version": "0.0.10",
+    "version": "0.0.11",
     "description": "A NodeJS production server for single page web apps",
-    "main": "dist/Server.js",
+    "main": "dist/src/Server.js",
     "engines": {
         "node": ">= 5.12.0"
     },
@@ -57,7 +57,6 @@
         "dateformat": "^2.0.0",
         "debug": "^2.6.3",
         "express": "^4.15.2",
-        "rx": "^4.1.0",
         "serve-favicon": "^2.4.1"
     }
 }
