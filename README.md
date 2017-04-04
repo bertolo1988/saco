@@ -29,7 +29,7 @@ and benefit from having:
 * [customizable format timestamps](https://github.com/felixge/node-dateformat)
 * [multi core server](https://nodejs.org/docs/latest/api/cluster.html)
 * resource caching
-* minification - not yet available
+* configured to work behind proxies
 
 ## Demo
 
