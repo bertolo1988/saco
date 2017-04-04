@@ -9,4 +9,5 @@ export interface ServerOptions {
     cert?: string;
     workers?: number;
     maxAge?: number;
+    behindProxy?: boolean;
 }

@@ -29,7 +29,8 @@ export class Server {
         dateformat: 'GMT:HH:MM:ss dd-mmm-yy Z',
         verbose: false,
         workers: NUM_CPUS,
-        maxAge: 43200000
+        maxAge: 43200000,
+        behindProxy: false
     };
 
     startedWorkersCount: number = 0;
@@ -59,6 +60,9 @@ export class Server {
 
     private appConfigure() {
         this.app.use(compression());
+        if (this.options.behindProxy) {
+            this.app.enable('trust proxy');
+        }
         if (this.options.verbose) {
             this.app.use((req: Request, res: Response, next: Function) => {
                 logInfo(datefmt(new Date(), this.options.dateformat), 'pid:', process.pid, 'ip:', req.ip, '\t', req.method, '\t', req.url);

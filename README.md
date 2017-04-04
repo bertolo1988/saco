@@ -55,6 +55,15 @@ new Saco.Server( { "folder" : path.join(__dirname, '/dist' )} ).start();
 
 Notice that we used [cross-env](https://github.com/kentcdodds/cross-env) to set the environment variables. You may use another method.
 
+## Behind a proxy
+
+If your saco instance is behind proxy such as [nginx](https://www.nginx.com/resources/wiki/), in order to have the request ip properly shown in the console
+do not forget to set the option `behindProxy` to true. This will configure our server to trust a proxy and behave as explained [here](https://expressjs.com/en/guide/behind-proxies.html).
+
+
+If your reverse proxy is Nginx you can add this `proxy_set_header X-Forwarded-For $remote_addr;` in your `.conf` file. This allows redefining or appending fields to the request header passed to the proxied server.
+
+
 ## Server API
 
 ```
@@ -77,34 +86,11 @@ stop(): Promise<any>
 ## Options
 
 Saco server supports the following options:
-```typescript
-export interface ServerOptions {
-    folder: string;
-    file?: string;
-    favicon?: string;
-    port?: number;
-    dateformat?: string;
-    verbose?: boolean;
-    key?: string;
-    cert?: string;
-    workers?: number;
-    maxAge?:number;
-}
-```
+[Link to ServerOptions.ts](/src/ServerOptions.ts)
+
 Values with `?` are optional.
 
-Default values:
-
-```typescript
-readonly DEFAULT_OPTIONS = {
-    file: 'index.html',
-    port: 4200,
-    dateformat: 'GMT:HH:MM:ss dd-mmm-yy Z',
-    verbose: false,
-    workers: os.cpus().length, // equals number of cpu cores
-    maxAge: 43200000
-};
-```
+[Link to default options here](/src/Server.ts#L26-L34)
 
 In order to have an https server `key` and `cert` paths must be defined.
 

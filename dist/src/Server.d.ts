@@ -12,6 +12,7 @@ export declare class Server {
         verbose: boolean;
         workers: number;
         maxAge: number;
+        behindProxy: boolean;
     };
     startedWorkersCount: number;
     app: Application;

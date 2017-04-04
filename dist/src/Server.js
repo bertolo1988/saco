@@ -27,7 +27,8 @@ class Server {
             dateformat: 'GMT:HH:MM:ss dd-mmm-yy Z',
             verbose: false,
             workers: NUM_CPUS,
-            maxAge: 43200000
+            maxAge: 43200000,
+            behindProxy: false
         };
         this.startedWorkersCount = 0;
         this.app = express();
@@ -50,6 +51,9 @@ class Server {
     }
     appConfigure() {
         this.app.use(compression());
+        if (this.options.behindProxy) {
+            this.app.enable('trust proxy');
+        }
         if (this.options.verbose) {
             this.app.use((req, res, next) => {
                 logInfo(datefmt(new Date(), this.options.dateformat), 'pid:', process.pid, 'ip:', req.ip, '\t', req.method, '\t', req.url);
