@@ -62,7 +62,6 @@ do not forget to set the option `behindProxy` to true.
 
 This will configure our server to trust a proxy and behave as explained [here](https://expressjs.com/en/guide/behind-proxies.html).
 
-
 If your reverse proxy is Nginx you can add this `proxy_set_header X-Forwarded-For $remote_addr;` in your `.conf` file.
 
 This will allow redefining or appending fields to the request header passed to the proxied server.

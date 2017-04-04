@@ -44,7 +44,7 @@
         ]
     },
     "rules": {
-        "no-unused-variable": true,
+        "no-unused-variable": [true, { "ignore-pattern": "^_" }],
         "class-name": true,
         "comment-format": [
             true,
