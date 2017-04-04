@@ -89,7 +89,7 @@ class Server {
     }
     startMaster() {
         var self = this;
-        return new Promise(function (resolve, reject) {
+        return new Promise((resolve, reject) => {
             for (let i = 0; i < self.options.workers; i++) {
                 cluster.fork();
             }
@@ -118,7 +118,7 @@ class Server {
     }
     startWorker() {
         var self = this;
-        return new Promise(function (resolve, reject) {
+        return new Promise((resolve, reject) => {
             self.server = self.createServer();
             self.server.listen(self.options.port, () => {
                 self.sendMaster(process.pid, ClusterMessage.WORKER_LISTENING);
@@ -133,7 +133,7 @@ class Server {
     // have sent ClusterMessage.WORKER_LISTENING to the master
     start() {
         var self = this;
-        return new Promise(function (resolve, reject) {
+        return new Promise((resolve, reject) => {
             if (cluster.isMaster) {
                 logInfo(`Starting master %O...`, process.pid);
                 logInfo('Options: %O', self.options);
@@ -149,7 +149,7 @@ class Server {
     // returnes a promise that resolves only after all
     // workers have send 'exit' event to the master
     stop() {
-        return new Promise(function (resolve, reject) {
+        return new Promise((resolve, reject) => {
             cluster.disconnect(() => {
                 resolve();
             });

@@ -4,7 +4,7 @@
     "description": "A NodeJS production server for single page web apps",
     "main": "dist/src/Server.js",
     "engines": {
-        "node": ">= 5.12.0"
+        "node": ">= 6.0.0"
     },
     "scripts": {
         "clean": "rm -rf dist && rm -rf node_modules",
