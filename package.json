@@ -4,7 +4,7 @@
     "description": "A NodeJS production server for single page web apps",
     "main": "dist/src/Server.js",
     "engines": {
-        "node": ">= 6.0.0"
+        "node": ">= 8.9.4"
     },
     "scripts": {
         "clean": "rm -rf dist && rm -rf node_modules",
@@ -37,17 +37,18 @@
     },
     "homepage": "https://github.com/bertolo1988/saco#readme",
     "devDependencies": {
-        "@types/chai": "^3.4.35",
-        "@types/compression": "0.0.33",
-        "@types/debug": "0.0.29",
+        "@types/chai": "^4.1.1",
+        "@types/compression": "0.0.35",
+        "@types/debug": "0.0.30",
         "@types/mocha": "^2.2.40",
-        "@types/node": "^7.0.11",
-        "@types/request": "0.0.42",
+        "@types/node": "^9.3.0",
+        "@types/request": "^2.0.12",
         "@types/rx": "^4.1.1",
-        "chai": "^3.5.0",
+        "chai": "^4.1.2",
         "chai-http": "^3.0.0",
         "cross-env": "^4.0.0",
-        "mocha": "^3.2.0",
+        "debug": "^3.1.0",
+        "mocha": "^5.0.0",
         "request": "^2.81.0",
         "tslint": "^5.0.0",
         "typescript": "^2.2.1"
@@ -55,7 +56,6 @@
     "dependencies": {
         "compression": "^1.6.2",
         "dateformat": "^2.0.0",
-        "debug": "^2.6.3",
         "express": "^4.15.2",
         "serve-favicon": "^2.4.1"
     }
