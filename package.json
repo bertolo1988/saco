@@ -1,10 +1,10 @@
 {
     "name": "saco",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "A NodeJS production server for single page web apps",
     "main": "dist/src/Server.js",
     "engines": {
-        "node": ">= 8.9.4"
+        "node": ">= 6.0.0"
     },
     "scripts": {
         "clean": "rm -rf dist && rm -rf node_modules",
@@ -46,7 +46,7 @@
         "@types/rx": "^4.1.1",
         "chai": "^4.1.2",
         "chai-http": "^3.0.0",
-        "cross-env": "^4.0.0",
+        "cross-env": "^5.1.3",
         "debug": "^3.1.0",
         "mocha": "^5.0.0",
         "request": "^2.81.0",
@@ -55,7 +55,7 @@
     },
     "dependencies": {
         "compression": "^1.6.2",
-        "dateformat": "^2.0.0",
+        "dateformat": "^3.0.2",
         "express": "^4.15.2",
         "serve-favicon": "^2.4.1"
     }

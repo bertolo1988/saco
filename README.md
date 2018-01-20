@@ -118,6 +118,14 @@ Contributions will be highly appreciated.
 
 Feel free to open any issues on any related matter.
 
+Recommended versions
+
+* node : v8.9.4
+
+* npm: 5.6.0
+
+* typescript: 2.6.2
+
 ## LICENSE
 
 Code released under the [MIT license](./LICENSE).
