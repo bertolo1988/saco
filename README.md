@@ -6,6 +6,8 @@ Saco promotes separation of concerns, quality, best practices and testability wh
 [![dependencies Status](https://david-dm.org/bertolo1988/saco/status.svg)](https://david-dm.org/bertolo1988/saco)
 [![npm version](https://badge.fury.io/js/saco.svg)](https://badge.fury.io/js/saco)
 [![Build Status](https://travis-ci.org/bertolo1988/saco.svg?branch=master)](https://travis-ci.org/bertolo1988/saco)
+[![Maintainability](https://api.codeclimate.com/v1/badges/bee30e158db90b070049/maintainability)](https://codeclimate.com/github/bertolo1988/saco/maintainability)
+
 
 ## By using Saco
 
@@ -117,6 +119,14 @@ Use `DEBUG=saco:* npm run your-launcher.js` to have the logs printed on your con
 Contributions will be highly appreciated.
 
 Feel free to open any issues on any related matter.
+
+Recommended versions
+
+* node : v8.9.4
+
+* npm: 5.6.0
+
+* typescript: 2.6.2
 
 ## LICENSE
 
