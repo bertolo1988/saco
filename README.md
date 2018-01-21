@@ -4,6 +4,7 @@ A pre customized, express server for single page web apps that aims to be produc
 Saco promotes separation of concerns, quality, best practices and testability when deploying front end single page web apps. 
 
 [![dependencies Status](https://david-dm.org/bertolo1988/saco/status.svg)](https://david-dm.org/bertolo1988/saco)
+[![devDependencies Status](https://david-dm.org/bertolo1988/saco/dev-status.svg)](https://david-dm.org/bertolo1988/saco?type=dev)
 [![npm version](https://badge.fury.io/js/saco.svg)](https://badge.fury.io/js/saco)
 [![Build Status](https://travis-ci.org/bertolo1988/saco.svg?branch=master)](https://travis-ci.org/bertolo1988/saco)
 [![Maintainability](https://api.codeclimate.com/v1/badges/bee30e158db90b070049/maintainability)](https://codeclimate.com/github/bertolo1988/saco/maintainability)
