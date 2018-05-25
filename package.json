@@ -1,6 +1,6 @@
 {
     "name": "saco",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "A NodeJS production server for single page web apps",
     "main": "dist/src/Server.js",
     "engines": {
@@ -57,6 +57,7 @@
         "compression": "^1.6.2",
         "dateformat": "^3.0.2",
         "express": "^4.15.2",
+        "hoek": "^5.0.3",
         "serve-favicon": "^2.4.1"
     }
 }

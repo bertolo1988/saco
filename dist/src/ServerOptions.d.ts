@@ -10,4 +10,6 @@ export interface ServerOptions {
     workers?: number;
     maxAge?: number;
     behindProxy?: boolean;
+    urlPrefix?: string;
+    assetsPath?: string;
 }
