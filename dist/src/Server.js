@@ -59,7 +59,7 @@ class Server {
         }
         if (this.options.verbose) {
             this.app.use((req, res, next) => {
-                logInfo(datefmt(new Date(), this.options.dateformat), 'pid:', process.pid, 'ip:', req.ip, '\t', req.method, '\t', req.url);
+                logInfo(this.options.name, datefmt(new Date(), this.options.dateformat), 'pid:', process.pid, 'ip:', req.ip, '\t', req.method, '\t', req.url);
                 next();
             });
         }

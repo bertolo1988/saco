@@ -12,7 +12,7 @@ var server = new Saco.Server({
 server
   .start()
   .then(() => {
-    return server.stop();
+    // return server.stop();
   })
   .catch(err => {
     console.log(err);

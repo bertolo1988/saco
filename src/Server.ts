@@ -71,6 +71,7 @@ export class Server {
     if (this.options.verbose) {
       this.app.use((req: Request, res: Response, next: Function) => {
         logInfo(
+          this.options.name,
           datefmt(new Date(), this.options.dateformat),
           'pid:',
           process.pid,

@@ -1,63 +1,64 @@
 {
-    "name": "saco",
-    "version": "2.0.0",
-    "description": "A NodeJS production server for single page web apps",
-    "main": "dist/src/Server.js",
-    "engines": {
-        "node": ">= 6.0.0"
-    },
-    "scripts": {
-        "clean": "rm -rf dist && rm -rf node_modules",
-        "lint": "tslint --fix --project .",
-        "pretest": "npm run lint && npm run build",
-        "test": "cross-env NODE_ENV=test mocha dist/test --recursive",
-        "build": "tsc -p .",
-        "watch": "tsc -w",
-        "http-demo": "cross-env NODE_ENV=production DEBUG=saco:* node demo/http-angular-cli-demo.js",
-        "https-demo": "cross-env NODE_ENV=production DEBUG=saco:* node demo/https-vue-cli-demo.js",
-        "prepublish": "npm run lint && npm run build"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/bertolo1988/saco.git"
-    },
-    "keywords": [
-        "server",
-        "production",
-        "nodejs",
-        "express",
-        "gzip",
-        "http",
-        "https"
-    ],
-    "author": "bertolo1988 <tiagobertolo@gmail.com> (https://github.com/bertolo1988)",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/bertolo1988/saco/issues"
-    },
-    "homepage": "https://github.com/bertolo1988/saco#readme",
-    "devDependencies": {
-        "@types/chai": "^4.1.1",
-        "@types/compression": "0.0.35",
-        "@types/debug": "0.0.30",
-        "@types/mocha": "^2.2.40",
-        "@types/node": "^9.3.0",
-        "@types/request": "^2.0.12",
-        "@types/rx": "^4.1.1",
-        "chai": "^4.1.2",
-        "chai-http": "^3.0.0",
-        "cross-env": "^5.1.3",
-        "mocha": "^5.0.0",
-        "request": "^2.81.0",
-        "tslint": "^5.0.0",
-        "typescript": "^2.2.1"
-    },
-    "dependencies": {
-        "compression": "^1.6.2",
-        "dateformat": "^3.0.2",
-        "debug": "^3.1.0",
-        "express": "^4.16.3",
-        "hoek": "^5.0.3",
-        "serve-favicon": "^2.4.1"
-    }
+  "name": "saco",
+  "version": "2.0.0",
+  "description": "A NodeJS production server for single page web apps",
+  "main": "dist/src/Server.js",
+  "engines": {
+    "node": ">= 6.0.0"
+  },
+  "scripts": {
+    "refresh": "npm run clean && npm i && npm run test",
+    "clean": "rm -rf dist && rm -rf node_modules",
+    "lint": "tslint --fix --project .",
+    "pretest": "npm run lint && npm run build",
+    "test": "cross-env NODE_ENV=test mocha dist/test --recursive",
+    "build": "tsc -p .",
+    "watch": "tsc -w",
+    "http-demo": "cross-env NODE_ENV=production DEBUG=saco:* node demo/http-angular-cli-demo.js",
+    "https-demo": "cross-env NODE_ENV=production DEBUG=saco:* node demo/https-vue-cli-demo.js",
+    "prepublishOnly": "npm run lint && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bertolo1988/saco.git"
+  },
+  "keywords": [
+    "server",
+    "production",
+    "nodejs",
+    "express",
+    "gzip",
+    "http",
+    "https"
+  ],
+  "author": "bertolo1988 <tiagobertolo@gmail.com> (https://github.com/bertolo1988)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bertolo1988/saco/issues"
+  },
+  "homepage": "https://github.com/bertolo1988/saco#readme",
+  "devDependencies": {
+    "@types/chai": "^4.1.3",
+    "@types/compression": "^0.0.36",
+    "@types/debug": "0.0.30",
+    "@types/mocha": "^5.2.0",
+    "@types/node": "^10.1.2",
+    "@types/request": "^2.47.0",
+    "@types/rx": "^4.1.1",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "cross-env": "^5.1.6",
+    "mocha": "^5.2.0",
+    "request": "^2.87.0",
+    "tslint": "^5.10.0",
+    "typescript": "^2.8.3"
+  },
+  "dependencies": {
+    "compression": "^1.7.2",
+    "dateformat": "^3.0.3",
+    "debug": "^3.1.0",
+    "express": "^4.16.3",
+    "hoek": "^5.0.3",
+    "serve-favicon": "^2.5.0"
+  }
 }
