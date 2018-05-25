@@ -1,6 +1,6 @@
 {
     "name": "saco",
-    "version": "1.3.0",
+    "version": "2.0.0",
     "description": "A NodeJS production server for single page web apps",
     "main": "dist/src/Server.js",
     "engines": {
@@ -13,8 +13,8 @@
         "test": "cross-env NODE_ENV=test mocha dist/test --recursive",
         "build": "tsc -p .",
         "watch": "tsc -w",
-        "http-demo": "cross-env NODE_ENV=production DEBUG=saco:* node demo/http-demo.js",
-        "https-demo": "cross-env NODE_ENV=production DEBUG=saco:* node demo/https-demo.js",
+        "http-demo": "cross-env NODE_ENV=production DEBUG=saco:* node demo/http-angular-cli-demo.js",
+        "https-demo": "cross-env NODE_ENV=production DEBUG=saco:* node demo/https-vue-cli-demo.js",
         "prepublish": "npm run lint && npm run build"
     },
     "repository": {

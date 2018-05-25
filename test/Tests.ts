@@ -12,63 +12,40 @@ chai.should();
 chai.use(chaiHttp);
 
 const angularCliDemoPath = path.join(__dirname, '../../examples/angular-cli');
-const vueCliDemoPath = path.join(__dirname, '../../examples/webpack-vue-cli');
 const TESTS_PORT = 3028;
 
 describe('testing basic CRUD operations', () => {
-
-    it('test options construction', (done) => {
-        let options: ServerOptions = { folder: angularCliDemoPath, port: TESTS_PORT, workers: 999, maxAge: 90 };
+    it('test options construction', done => {
+        let options: ServerOptions = { name: 'randomName', rootPath: angularCliDemoPath, port: TESTS_PORT, workers: 999, maxAge: 90 };
         let server: Server = new Server(options);
-        expect(server.options.file).to.be.a('string').and.equal('index.html');
+        expect(server.options.name).to.be.a('string').and.equal('randomName');
         expect(server.options.port).to.be.a('number').and.equal(TESTS_PORT);
         expect(server.options.dateformat).to.be.a('string').and.equal('GMT:HH:MM:ss dd-mmm-yy Z');
         expect(server.options.verbose).to.be.a('boolean').and.equal(false);
         expect(server.options.workers).to.be.a('number').and.equal(os.cpus().length);
         expect(server.options.maxAge).to.be.a('number').and.equal(90);
-        expect(server.options.folder).to.be.a('string').and.equal(angularCliDemoPath);
+        expect(server.options.rootPath).to.be.a('string').and.equal(angularCliDemoPath);
+        expect(server.options.index.path).to.be.a('string').and.equal('index.html');
+        expect(server.options.index.url).to.be.a('string').and.equal('/*');
+        expect(server.options.assets.url).to.be.a('string').and.equal('/');
+        expect(server.options.assets.path).to.be.a('string').and.equal('/');
         done();
     });
 
     it('test default options', (done) => {
-        let options: ServerOptions = { folder: 'dist' };
+        let options: ServerOptions = { rootPath: 'dist' };
         let server: Server = new Server(options);
-        expect(server.options.file).to.be.a('string').and.equal('index.html');
+        expect(server.options.name).to.be.a('string').and.equal('saco-server-1');
         expect(server.options.port).to.be.a('number').and.equal(4200);
         expect(server.options.dateformat).to.be.a('string').and.equal('GMT:HH:MM:ss dd-mmm-yy Z');
         expect(server.options.verbose).to.be.a('boolean').and.equal(false);
         expect(server.options.workers).to.be.a('number').and.equal(os.cpus().length);
-        expect(server.options.maxAge).to.be.a('number').and.equal(43200000);
-        expect(server.options.folder).to.be.a('string').and.equal('dist');
+        expect(server.options.rootPath).to.be.a('string').and.equal('dist');
+        expect(server.options.index.path).to.be.a('string').and.equal('index.html');
+        expect(server.options.index.url).to.be.a('string').and.equal('/*');
+        expect(server.options.assets.url).to.be.a('string').and.equal('/');
+        expect(server.options.assets.path).to.be.a('string').and.equal('/');
         done();
-    });
-
-    // test disabled because of inability to test clusters
-    xit('should launch angular-cli example', (done) => {
-        let options: ServerOptions = { folder: angularCliDemoPath, port: TESTS_PORT, workers: 1 };
-        let server: Server = new Server(options);
-        server.start().then(() => {
-            chai.request('localhost:' + options.port).get('/').then(res => {
-                res.should.have.status(200);
-                server.stop().then(() => {
-                    done();
-                });
-            });
-        });
-    });
-
-    // test disabled because of inability to test clusters
-    xit('should launch webpack-vue-cli example', (done) => {
-        let options: ServerOptions = { folder: vueCliDemoPath, port: TESTS_PORT, workers: 1 };
-        let server: Server = new Server(options);
-        server.start().then(() => {
-            chai.request('localhost:' + options.port).get('/').then(res => {
-                res.should.have.status(200);
-                server.stop().then(() => {
-                    done();
-                });
-            });
-        });
     });
 
 });
