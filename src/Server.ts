@@ -1,4 +1,4 @@
-import { ServerOptions } from './ServerOptions';
+import { ServerOptions, DEFAULT_OPTIONS } from './ServerOptions';
 import { Request, Response, Application } from 'express';
 import * as Http from 'http';
 import * as Https from 'https';
@@ -10,10 +10,9 @@ import * as datefmt from 'dateformat';
 import * as favicon from 'serve-favicon';
 import * as fs from 'fs';
 import * as cluster from 'cluster';
-import * as os from 'os';
 import * as process from 'process';
+import * as os from 'os';
 
-const NUM_CPUS = os.cpus().length;
 const logError: debug.IDebugger = debug('saco:error');
 const logInfo: debug.IDebugger = debug('saco:info');
 
@@ -22,29 +21,16 @@ enum ClusterMessage {
 }
 
 export class Server {
-  readonly DEFAULT_OPTIONS = {
-    name: 'saco-server-1',
-    port: 4200,
-    dateformat: 'GMT:HH:MM:ss dd-mmm-yy Z',
-    verbose: false,
-    workers: NUM_CPUS,
-    maxAge: 43200000,
-    behindProxy: false,
-    basePath: path.resolve(__dirname),
-    index: { url: '/*', path: 'index.html' },
-    assets: { url: '/', path: '/' }
-  };
-
   startedWorkersCount: number = 0;
   app: Application = express();
   server: Http.Server | Https.Server;
   options: ServerOptions;
 
   constructor(options: ServerOptions) {
-    this.options = (<any>Object).assign({}, this.DEFAULT_OPTIONS, options);
+    this.options = (<any>Object).assign({}, DEFAULT_OPTIONS, options);
     this.options.workers = Math.min(
       Math.max(this.options.workers, 1),
-      NUM_CPUS
+      os.cpus().length
     );
     this.appConfigure();
   }

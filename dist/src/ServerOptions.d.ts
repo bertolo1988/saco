@@ -22,3 +22,4 @@ export interface ServerOptions {
         path: string;
     };
 }
+export declare const DEFAULT_OPTIONS: ServerOptions;

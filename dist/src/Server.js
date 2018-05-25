@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const ServerOptions_1 = require("./ServerOptions");
 const Http = require("http");
 const Https = require("https");
 const express = require("express");
@@ -10,9 +11,8 @@ const datefmt = require("dateformat");
 const favicon = require("serve-favicon");
 const fs = require("fs");
 const cluster = require("cluster");
-const os = require("os");
 const process = require("process");
-const NUM_CPUS = os.cpus().length;
+const os = require("os");
 const logError = debug('saco:error');
 const logInfo = debug('saco:info');
 var ClusterMessage;
@@ -21,22 +21,10 @@ var ClusterMessage;
 })(ClusterMessage || (ClusterMessage = {}));
 class Server {
     constructor(options) {
-        this.DEFAULT_OPTIONS = {
-            name: 'saco-server-1',
-            port: 4200,
-            dateformat: 'GMT:HH:MM:ss dd-mmm-yy Z',
-            verbose: false,
-            workers: NUM_CPUS,
-            maxAge: 43200000,
-            behindProxy: false,
-            basePath: path.resolve(__dirname),
-            index: { url: '/*', path: 'index.html' },
-            assets: { url: '/', path: '/' }
-        };
         this.startedWorkersCount = 0;
         this.app = express();
-        this.options = Object.assign({}, this.DEFAULT_OPTIONS, options);
-        this.options.workers = Math.min(Math.max(this.options.workers, 1), NUM_CPUS);
+        this.options = Object.assign({}, ServerOptions_1.DEFAULT_OPTIONS, options);
+        this.options.workers = Math.min(Math.max(this.options.workers, 1), os.cpus().length);
         this.appConfigure();
     }
     isHttps() {

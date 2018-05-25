@@ -99,9 +99,7 @@ Saco server supports the following options:
 
 [Link to ServerOptions.ts.](/src/ServerOptions.ts)
 
-Values with `?` are optional.
-
-[Link to default options here.](/src/Server.ts#L25-L36)
+Remember values with `?` are optional.
 
 In order to have an https server `key` and `cert` paths must be defined.
 
@@ -127,11 +125,11 @@ Feel free to open any issues on any related matter.
 
 Recommended versions
 
-* node : v8.9.4
+* node : v8.11.2
 
 * npm: 5.6.0
 
-* typescript: 2.6.2
+* typescript: 2.8.3
 
 ## LICENSE
 
