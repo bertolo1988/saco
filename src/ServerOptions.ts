@@ -11,5 +11,5 @@ export interface ServerOptions {
   maxAge?: number;
   behindProxy?: boolean;
   urlPrefix?: string;
-  assetsPath?: string;
+  assetsUrlPrefix?: string;
 }

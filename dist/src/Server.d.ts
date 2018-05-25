@@ -14,7 +14,7 @@ export declare class Server {
         maxAge: number;
         behindProxy: boolean;
         urlPrefix: string;
-        assetsPath: string;
+        assetsUrlPrefix: string;
     };
     startedWorkersCount: number;
     app: Application;

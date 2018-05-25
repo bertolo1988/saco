@@ -30,7 +30,7 @@ class Server {
             maxAge: 43200000,
             behindProxy: false,
             urlPrefix: '/*',
-            assetsPath: '/'
+            assetsUrlPrefix: '/'
         };
         this.startedWorkersCount = 0;
         this.app = express();
@@ -62,7 +62,7 @@ class Server {
                 next();
             });
         }
-        this.app.use(this.options.assetsPath, express.static(this.options.folder, { maxAge: this.options.maxAge }));
+        this.app.use(this.options.assetsUrlPrefix, express.static(this.options.folder, { maxAge: this.options.maxAge }));
         this.app.get(this.options.urlPrefix, (req, res) => {
             res.sendFile(path.join(this.options.folder, this.options.file));
         });
