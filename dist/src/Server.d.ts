@@ -6,15 +6,22 @@ import * as Http from 'http';
 import * as Https from 'https';
 export declare class Server {
     readonly DEFAULT_OPTIONS: {
-        file: string;
+        name: string;
         port: number;
         dateformat: string;
         verbose: boolean;
         workers: number;
         maxAge: number;
         behindProxy: boolean;
-        urlPrefix: string;
-        assetsUrlPrefix: string;
+        basePath: string;
+        index: {
+            url: string;
+            path: string;
+        };
+        assets: {
+            url: string;
+            path: string;
+        };
     };
     startedWorkersCount: number;
     app: Application;

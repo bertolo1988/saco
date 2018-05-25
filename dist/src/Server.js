@@ -22,15 +22,16 @@ var ClusterMessage;
 class Server {
     constructor(options) {
         this.DEFAULT_OPTIONS = {
-            file: 'index.html',
+            name: 'saco-server-1',
             port: 4200,
             dateformat: 'GMT:HH:MM:ss dd-mmm-yy Z',
             verbose: false,
             workers: NUM_CPUS,
             maxAge: 43200000,
             behindProxy: false,
-            urlPrefix: '/*',
-            assetsUrlPrefix: '/'
+            basePath: path.resolve(__dirname),
+            index: { url: '/*', path: 'index.html' },
+            assets: { url: '/', path: '/' }
         };
         this.startedWorkersCount = 0;
         this.app = express();
@@ -58,13 +59,13 @@ class Server {
         }
         if (this.options.verbose) {
             this.app.use((req, res, next) => {
-                logInfo(datefmt(new Date(), this.options.dateformat), 'pid:', process.pid, 'ip:', req.ip, '\t', req.method, '\t', req.url);
+                logInfo(this.options.name, datefmt(new Date(), this.options.dateformat), 'pid:', process.pid, 'ip:', req.ip, '\t', req.method, '\t', req.url);
                 next();
             });
         }
-        this.app.use(this.options.assetsUrlPrefix, express.static(this.options.folder, { maxAge: this.options.maxAge }));
-        this.app.get(this.options.urlPrefix, (req, res) => {
-            res.sendFile(path.join(this.options.folder, this.options.file));
+        this.app.use(this.options.assets.url, express.static(path.join(this.options.rootPath, this.options.assets.path), { maxAge: this.options.maxAge }));
+        this.app.get(this.options.index.url, (req, res) => {
+            res.sendFile(path.join(this.options.rootPath, this.options.index.path));
         });
         this.app.use((err, req, res, next) => {
             logError(datefmt(new Date(), this.options.dateformat), '\t:', req.method, req.url);
@@ -72,7 +73,7 @@ class Server {
             res.status(500).send('Something broke!');
         });
         if (this.options.favicon != null) {
-            this.app.use(favicon(path.join(this.options.folder, this.options.favicon)));
+            this.app.use(this.options.favicon.url, favicon(path.join(this.options.rootPath, this.options.favicon.path)));
         }
     }
     createServer() {
@@ -110,7 +111,7 @@ class Server {
                     resolve(self.startedWorkersCount);
                 }
             });
-            cluster.on('online', (worker) => {
+            cluster.on('online', worker => {
                 logInfo('Process %O just went online', worker.process.pid);
             });
         });
@@ -122,10 +123,12 @@ class Server {
         var self = this;
         return new Promise((resolve, reject) => {
             self.server = self.createServer();
-            self.server.listen(self.options.port, () => {
+            self.server
+                .listen(self.options.port, () => {
                 self.sendMaster(process.pid, ClusterMessage.WORKER_LISTENING);
                 resolve();
-            }).on('error', () => {
+            })
+                .on('error', () => {
                 logError('Failed to start the server on port %O', self.options.port);
                 reject();
             });
@@ -137,13 +140,13 @@ class Server {
         var self = this;
         return new Promise((resolve, reject) => {
             if (cluster.isMaster) {
-                logInfo(`Starting master %O...`, process.pid);
+                logInfo(`Starting %O master %O...`, this.options.name, process.pid);
                 logInfo('Options: %O', self.options);
                 self.setMaxSockets();
                 resolve(self.startMaster());
             }
             else {
-                logInfo(`Starting worker %O...`, process.pid);
+                logInfo(`Starting %O worker %O...`, this.options.name, process.pid);
                 self.startWorker();
             }
         });

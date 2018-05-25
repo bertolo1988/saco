@@ -1,7 +1,5 @@
 export interface ServerOptions {
-    folder: string;
-    file?: string;
-    favicon?: string;
+    name?: string;
     port?: number;
     dateformat?: string;
     verbose?: boolean;
@@ -10,6 +8,17 @@ export interface ServerOptions {
     workers?: number;
     maxAge?: number;
     behindProxy?: boolean;
-    urlPrefix?: string;
-    assetsUrlPrefix?: string;
+    rootPath: string;
+    index?: {
+        url: string;
+        path: string;
+    };
+    assets?: {
+        url: string;
+        path: string;
+    };
+    favicon?: {
+        url: string;
+        path: string;
+    };
 }
