@@ -28,7 +28,9 @@ class Server {
             verbose: false,
             workers: NUM_CPUS,
             maxAge: 43200000,
-            behindProxy: false
+            behindProxy: false,
+            urlPrefix: '/*',
+            assetsPath: '/'
         };
         this.startedWorkersCount = 0;
         this.app = express();
@@ -60,8 +62,8 @@ class Server {
                 next();
             });
         }
-        this.app.use(express.static(this.options.folder, { maxAge: this.options.maxAge }));
-        this.app.get('/*', (req, res) => {
+        this.app.use(this.options.assetsPath, express.static(this.options.folder, { maxAge: this.options.maxAge }));
+        this.app.get(this.options.urlPrefix, (req, res) => {
             res.sendFile(path.join(this.options.folder, this.options.file));
         });
         this.app.use((err, req, res, next) => {
