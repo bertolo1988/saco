@@ -51,12 +51,16 @@ and benefit from having:
 ```javascript
 const path = require('path');
 const Saco = require('saco');
-new Saco.Server( { "folder" : path.join(__dirname, '/dist' )} ).start();
+new Saco.Server( { "rootPath" : path.join(__dirname, '/dist' )} ).start();
 ```
 
 5. Run it as: `cross-env NODE_ENV=production DEBUG=saco:* node my-script.js`.
 
 Notice that we used [cross-env](https://github.com/kentcdodds/cross-env) to set the environment variables. You may use another method.
+
+## How does it work exactly?
+
+Well... Take a look at the code, its not much.
 
 ## Behind a proxy
 
