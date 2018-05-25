@@ -101,7 +101,7 @@ Saco server supports the following options:
 
 Values with `?` are optional.
 
-[Link to default options here.](/src/Server.ts#L26-L34)
+[Link to default options here.](/src/Server.ts#L25-L36)
 
 In order to have an https server `key` and `cert` paths must be defined.
 
