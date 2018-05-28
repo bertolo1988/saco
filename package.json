@@ -25,11 +25,12 @@
   "keywords": [
     "server",
     "production",
+    "cluster",
     "nodejs",
-    "express",
-    "gzip",
     "http",
-    "https"
+    "https",
+    "web",
+    "front-end"
   ],
   "author": "bertolo1988 <tiagobertolo@gmail.com> (https://github.com/bertolo1988)",
   "license": "MIT",
