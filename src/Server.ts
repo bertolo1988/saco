@@ -12,6 +12,7 @@ import * as fs from 'fs';
 import * as cluster from 'cluster';
 import * as process from 'process';
 import * as os from 'os';
+import * as cors from 'cors';
 
 const logError: debug.IDebugger = debug('saco:error');
 const logInfo: debug.IDebugger = debug('saco:info');
@@ -50,6 +51,9 @@ export class Server {
   }
 
   private appConfigure() {
+    if (this.options.cors) {
+      this.app.use(cors());
+    }
     this.app.use(compression());
     if (this.options.behindProxy) {
       this.app.enable('trust proxy');

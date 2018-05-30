@@ -5,6 +5,7 @@ const path = require("path");
 exports.DEFAULT_OPTIONS = {
     name: 'saco-server-1',
     port: 4200,
+    cors: false,
     dateformat: 'GMT:HH:MM:ss dd-mmm-yy Z',
     verbose: false,
     workers: os.cpus().length,

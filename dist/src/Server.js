@@ -13,6 +13,7 @@ const fs = require("fs");
 const cluster = require("cluster");
 const process = require("process");
 const os = require("os");
+const cors = require("cors");
 const logError = debug('saco:error');
 const logInfo = debug('saco:info');
 var ClusterMessage;
@@ -41,6 +42,9 @@ class Server {
         }
     }
     appConfigure() {
+        if (this.options.cors) {
+            this.app.use(cors());
+        }
         this.app.use(compression());
         if (this.options.behindProxy) {
             this.app.enable('trust proxy');
