@@ -1,6 +1,7 @@
 export interface ServerOptions {
     name?: string;
     port?: number;
+    cors?: boolean;
     dateformat?: string;
     verbose?: boolean;
     key?: string;
