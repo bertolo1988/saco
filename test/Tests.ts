@@ -48,4 +48,21 @@ describe('testing basic CRUD operations', () => {
         done();
     });
 
+
+    it('test index url as array', (done) => {
+        let options: ServerOptions = { rootPath: 'dist' , index: { url: [ '/abcd/*', '/abcd'], path: 'index.html' }};
+        let server: Server = new Server(options);
+        expect(server.options.name).to.be.a('string').and.equal(DEFAULT_OPTIONS.name);
+        expect(server.options.port).to.be.a('number').and.equal(DEFAULT_OPTIONS.port);
+        expect(server.options.dateformat).to.be.a('string').and.equal(DEFAULT_OPTIONS.dateformat);
+        expect(server.options.verbose).to.be.a('boolean').and.equal(DEFAULT_OPTIONS.verbose);
+        expect(server.options.workers).to.be.a('number').and.equal(os.cpus().length);
+        expect(server.options.rootPath).to.be.a('string').and.equal('dist');
+        expect(server.options.index.path).to.be.a('string').and.equal(DEFAULT_OPTIONS.index.path);
+        expect(server.options.index.url).to.be.a('array');
+        expect(server.options.assets.path).to.be.a('string').and.equal(DEFAULT_OPTIONS.assets.path);
+        expect(server.options.assets.url).to.be.a('string').and.equal(DEFAULT_OPTIONS.assets.url);
+        done();
+    });
+
 });

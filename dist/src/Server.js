@@ -56,8 +56,10 @@ class Server {
             });
         }
         this.app.use(this.options.assets.url, express.static(path.join(this.options.rootPath, this.options.assets.path), { maxAge: this.options.maxAge }));
-        this.app.get(this.options.index.url, (req, res) => {
-            res.sendFile(path.join(this.options.rootPath, this.options.index.path));
+        Array.from(this.options.index.url).forEach(url => {
+            this.app.get(url, (req, res) => {
+                res.sendFile(path.join(this.options.rootPath, this.options.index.path));
+            });
         });
         this.app.use((err, req, res, next) => {
             logError(datefmt(new Date(), this.options.dateformat), '\t:', req.method, req.url);

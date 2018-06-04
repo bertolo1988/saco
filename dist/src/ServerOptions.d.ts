@@ -11,7 +11,7 @@ export interface ServerOptions {
     behindProxy?: boolean;
     rootPath: string;
     index?: {
-        url: string;
+        url: string | Array<string>;
         path: string;
     };
     assets?: {

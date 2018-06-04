@@ -44,5 +44,20 @@ describe('testing basic CRUD operations', () => {
         expect(server.options.assets.url).to.be.a('string').and.equal(ServerOptions_1.DEFAULT_OPTIONS.assets.url);
         done();
     });
+    it('test index url as array', (done) => {
+        let options = { rootPath: 'dist', index: { url: ['/abcd/*', '/abcd'], path: 'index.html' } };
+        let server = new Server_1.Server(options);
+        expect(server.options.name).to.be.a('string').and.equal(ServerOptions_1.DEFAULT_OPTIONS.name);
+        expect(server.options.port).to.be.a('number').and.equal(ServerOptions_1.DEFAULT_OPTIONS.port);
+        expect(server.options.dateformat).to.be.a('string').and.equal(ServerOptions_1.DEFAULT_OPTIONS.dateformat);
+        expect(server.options.verbose).to.be.a('boolean').and.equal(ServerOptions_1.DEFAULT_OPTIONS.verbose);
+        expect(server.options.workers).to.be.a('number').and.equal(os.cpus().length);
+        expect(server.options.rootPath).to.be.a('string').and.equal('dist');
+        expect(server.options.index.path).to.be.a('string').and.equal(ServerOptions_1.DEFAULT_OPTIONS.index.path);
+        expect(server.options.index.url).to.be.a('array');
+        expect(server.options.assets.path).to.be.a('string').and.equal(ServerOptions_1.DEFAULT_OPTIONS.assets.path);
+        expect(server.options.assets.url).to.be.a('string').and.equal(ServerOptions_1.DEFAULT_OPTIONS.assets.url);
+        done();
+    });
 });
 //# sourceMappingURL=Tests.js.map
