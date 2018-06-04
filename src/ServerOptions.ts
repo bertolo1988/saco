@@ -12,7 +12,7 @@ export interface ServerOptions {
   maxAge?: number;
   behindProxy?: boolean;
   rootPath: string;
-  index?: { url: string; path: string };
+  index?: { url: string|Array<string>; path: string };
   assets?: { url: string; path: string };
   favicon?: { url: string; path: string };
 }

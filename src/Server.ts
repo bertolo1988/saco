@@ -83,7 +83,7 @@ export class Server {
       )
     );
     this.app.get(this.options.index.url, (req, res) => {
-      res.sendFile(path.join(this.options.rootPath, this.options.index.path));
+        res.sendFile(path.join(this.options.rootPath, this.options.index.path));
     });
     this.app.use((err: Error, req: Request, res: Response, next: Function) => {
       logError(
