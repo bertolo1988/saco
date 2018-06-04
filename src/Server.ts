@@ -82,11 +82,11 @@ export class Server {
         { maxAge: this.options.maxAge }
       )
     );
-    Array.from(this.options.index.url).forEach(url => {
-        this.app.get(url, (req, res) => {
-            res.sendFile(path.join(this.options.rootPath, this.options.index.path));
-        });
+
+    this.app.get(Array.from(this.options.index.url), (req, res) => {
+        res.sendFile(path.join(this.options.rootPath, this.options.index.path));
     });
+
     this.app.use((err: Error, req: Request, res: Response, next: Function) => {
       logError(
         datefmt(new Date(), this.options.dateformat),
