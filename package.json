@@ -1,6 +1,6 @@
 {
   "name": "saco",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "A NodeJS production server for single page web apps",
   "main": "dist/src/Server.js",
   "engines": {
