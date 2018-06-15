@@ -3,6 +3,7 @@ import * as path from 'path';
 export interface ServerOptions {
   name?: string;
   port?: number;
+  ip?: string;
   cors?: boolean;
   dateformat?: string;
   verbose?: boolean;
@@ -20,6 +21,7 @@ export interface ServerOptions {
 export const DEFAULT_OPTIONS: ServerOptions = {
   name: 'saco-server-1',
   port: 4200,
+  ip: 'localhost',
   cors: false,
   dateformat: 'GMT:HH:MM:ss dd-mmm-yy Z',
   verbose: false,

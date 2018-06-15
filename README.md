@@ -15,10 +15,10 @@ Saco promotes separation of concerns, quality, best practices and testability wh
 ...you avoid the following common mistakes:
 
 * using development servers in production
-* poluting your front end project with several dependencies that are only used in the production server launch
+* poluting your front end project with extra dependencies
 * having your front end app on the same server of your back end server
 * using non [nodejs](https://nodejs.org/en/) solutions
-* misconfiguration
+* incomplete production configuration
 
 and benefit from having: 
 
@@ -104,6 +104,24 @@ Remember values with `?` are optional.
 In order to have an https server `key` and `cert` paths must be defined.
 
 Workers has a default and maximum value equal to the number of cores of your processor.
+
+| option | What it does |
+|-------------|------------------------------------------------------------------------------------|
+| name | Just a string to easily identify the server in the log. |
+| port | Where the server is going to listen. |
+| ip | The address where the server will be. For most cases this should be either 'localhost or '0.0.0.0'. |
+| cors | Set to true if you want to allow cross origin requests. |
+| dateformat | String describing logs dateformat. Must be supported by [dateformat npm package](https://www.npmjs.com/package/dateformat). |
+| verbose | Set to true if you want to have logs in the console. |
+| key  | HTTPS key. |
+| cert | HTTPS certificate. |
+| workers | Number of forks. Default value depends on number of processor cores. |
+| maxAge | Specifies, in milliseconds, for how long should resources stay in client cache. |
+| behindProxy | Enables trust proxy header. |
+| rootPath | Specify the path where the resources will be in the server local hard drive. |
+| index | Expects an object with url and path. Path is the relative path from rootPath until the file and url is the default url used by the server. |
+| assets | Same as index but for the assets used by the page. |
+| favicon | Same as index but for favicon file. |
 
 ## Linting
 

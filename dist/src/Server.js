@@ -42,6 +42,7 @@ class Server {
         }
     }
     appConfigure() {
+        this.app.disable('x-powered-by');
         if (this.options.cors) {
             this.app.use(cors());
         }
@@ -57,6 +58,7 @@ class Server {
         }
         this.app.use(this.options.assets.url, express.static(path.join(this.options.rootPath, this.options.assets.path), { maxAge: this.options.maxAge }));
         this.app.get(this.options.index.url, (req, res) => {
+            res.setHeader('Cache-Control', `public, max-age=${this.options.maxAge}`);
             res.sendFile(path.join(this.options.rootPath, this.options.index.path));
         });
         this.app.use((err, req, res, next) => {
@@ -116,7 +118,7 @@ class Server {
         return new Promise((resolve, reject) => {
             self.server = self.createServer();
             self.server
-                .listen(self.options.port, () => {
+                .listen(self.options.port, self.options.ip, () => {
                 self.sendMaster(process.pid, ClusterMessage.WORKER_LISTENING);
                 resolve();
             })

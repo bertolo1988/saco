@@ -20,6 +20,7 @@ describe('testing basic CRUD operations', () => {
         let server: Server = new Server(options);
         expect(server.options.name).to.be.a('string').and.equal('randomName');
         expect(server.options.port).to.be.a('number').and.equal(TESTS_PORT);
+        expect(server.options.ip).to.be.a('string').and.equal(DEFAULT_OPTIONS.ip);
         expect(server.options.dateformat).to.be.a('string').and.equal('GMT:HH:MM:ss dd-mmm-yy Z');
         expect(server.options.verbose).to.be.a('boolean').and.equal(false);
         expect(server.options.workers).to.be.a('number').and.equal(os.cpus().length);
@@ -37,6 +38,7 @@ describe('testing basic CRUD operations', () => {
         let server: Server = new Server(options);
         expect(server.options.name).to.be.a('string').and.equal(DEFAULT_OPTIONS.name);
         expect(server.options.port).to.be.a('number').and.equal(DEFAULT_OPTIONS.port);
+        expect(server.options.ip).to.be.a('string').and.equal(DEFAULT_OPTIONS.ip);
         expect(server.options.dateformat).to.be.a('string').and.equal(DEFAULT_OPTIONS.dateformat);
         expect(server.options.verbose).to.be.a('boolean').and.equal(DEFAULT_OPTIONS.verbose);
         expect(server.options.workers).to.be.a('number').and.equal(os.cpus().length);
