@@ -1,5 +1,4 @@
 /// <reference types="express" />
-/// <reference types="node" />
 import { ServerOptions } from './ServerOptions';
 import { Application } from 'express';
 import * as Http from 'http';
