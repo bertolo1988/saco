@@ -1,6 +1,6 @@
 {
   "name": "saco",
-  "version": "2.2.1-dev",
+  "version": "2.2.1",
   "description": "A NodeJS production server for single page web apps",
   "main": "dist/src/Server.js",
   "engines": {
@@ -52,8 +52,8 @@
     "extend": "^3.0.2",
     "mocha": "^6.0.2",
     "request": "^2.87.0",
-    "tslint": "^5.10.0",
-    "typescript": "^2.8.3"
+    "tslint": "^5.14.0",
+    "typescript": "^3.3.3333"
   },
   "dependencies": {
     "compression": "^1.7.4",

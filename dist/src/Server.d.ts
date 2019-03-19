@@ -1,4 +1,4 @@
-/// <reference types="express" />
+/// <reference types="node" />
 import { ServerOptions } from './ServerOptions';
 import { Application } from 'express';
 import * as Http from 'http';
@@ -9,13 +9,13 @@ export declare class Server {
     server: Http.Server | Https.Server;
     options: ServerOptions;
     constructor(options: ServerOptions);
-    private isHttps();
-    private setMaxSockets();
-    private appConfigure();
-    private createServer();
-    private startMaster();
-    private sendMaster(pid, msg);
-    private startWorker();
+    private isHttps;
+    private setMaxSockets;
+    private appConfigure;
+    private createServer;
+    private startMaster;
+    private sendMaster;
+    private startWorker;
     start(): Promise<number>;
     stop(): Promise<any>;
 }
